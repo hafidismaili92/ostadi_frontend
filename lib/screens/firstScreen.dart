@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ostadi_frontend/constants/app_constants.dart';
+import 'package:ostadi_frontend/constants/assets.dart';
 import 'package:ostadi_frontend/themes/buttonsStyle.dart';
 
 class FirstScreen extends StatelessWidget {
@@ -18,7 +19,22 @@ class FirstScreen extends StatelessWidget {
                 child: Column(children: [
                   Expanded(
                       child: Center(
-                    child: Image.asset("assets/images/logo.png", width: 160),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset("assets/images/logo.png", width: 70),
+                        SizedBox(width: 10),
+                        Text(
+                          "OSTADI",
+                          style: TextStyle(
+                              fontSize: 36,
+                              fontFamily: Font.cherryBombOne,
+                              letterSpacing: 2,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white),
+                        )
+                      ],
+                    ),
                   )),
                   Row(
                     children: [
