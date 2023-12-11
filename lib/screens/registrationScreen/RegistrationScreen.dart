@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ostadi_frontend/screens/RegistrationScreen/subscriberTypeScreen.dart';
 import 'package:ostadi_frontend/screens/registrationScreen/studentInfoForm.dart';
+import 'package:ostadi_frontend/screens/registrationScreen/subjectsScreen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   List<Widget> screens = [
     SubscriberTypeScreen(),
     StudentInfoForm(),
+    SubjectsScreen(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   _currentPage = page;
                 });
               },
-              children: screens,
+              children: screens.reversed.toList(),
             ),
           ),
           Padding(
