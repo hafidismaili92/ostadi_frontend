@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ostadi_frontend/routes/routeNames.dart' as routeNames;
 import 'package:ostadi_frontend/screens/firstScreen/firstScreen.dart';
 import 'package:ostadi_frontend/screens/loginScreen/loginScreen.dart';
-import 'package:ostadi_frontend/screens/registrationScreen/RegistrationScreen.dart';
+import 'package:ostadi_frontend/screens/registrationScreen/registrationScreen.dart';
 
 //TODO:apply guards
 Route<dynamic> RouteController(RouteSettings settings) {

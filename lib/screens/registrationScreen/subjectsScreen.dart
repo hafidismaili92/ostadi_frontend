@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ostadi_frontend/constants/app_constants.dart';
+import 'package:ostadi_frontend/models/RegistreUser.dart';
+import 'package:ostadi_frontend/screens/registrationScreen/registration_cubit.dart';
 
-class SubjectsScreen extends StatefulWidget {
-  const SubjectsScreen({Key? key}) : super(key: key);
-
-  @override
-  _SubjectsScreenState createState() => _SubjectsScreenState();
-}
-
-class _SubjectsScreenState extends State<SubjectsScreen> {
+class SubjectsScreen extends StatelessWidget {
   List<Map<String, Object>> subjects = [
     {
       "id": 1,
@@ -36,18 +32,10 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
       "path": "assets/icons/programming.png"
     },
   ];
-  void switchSelectObject(id) {
-    for (var subject in subjects) {
-      if (subject["id"] == id) {
-        setState(() {
-          subject["selected"] = !(subject["selected"] as bool);
-        });
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
+    final registredUserCubit = BlocProvider.of<RegisterCubit>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
@@ -62,7 +50,8 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
               style: Theme.of(context).textTheme.headlineSmall),
           SizedBox(height: kVerticalSpace["meduim"]),
           Expanded(
-            child: GridView.count(
+              child: BlocBuilder<RegisterCubit, RegiteredUser>(
+            builder: (context, registreduser) => GridView.count(
               shrinkWrap: true,
               crossAxisCount: 2,
               mainAxisSpacing: 20,
@@ -73,18 +62,20 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                         child: MouseRegion(
                           cursor: SystemMouseCursors.click,
                           child: GestureDetector(
-                            onTap: () => switchSelectObject(e["id"]),
+                            onTap: () => registredUserCubit.updateSubjects(
+                                subjectId: e["id"]!.toString()),
                             child: SubjectItemCard(
                               imgPath: e["path"]! as String,
                               title: e["name"]! as String,
-                              isSelected: e["selected"]! as bool,
+                              isSelected: registreduser.subjects
+                                  .contains(e["id"].toString()),
                             ),
                           ),
                         ),
                       ))
                   .toList(),
             ),
-          ),
+          )),
         ],
       ),
     );

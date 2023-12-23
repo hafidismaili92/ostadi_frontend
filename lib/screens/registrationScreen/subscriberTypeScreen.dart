@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ostadi_frontend/constants/app_constants.dart';
+import 'package:ostadi_frontend/models/RegistreUser.dart';
+import 'package:ostadi_frontend/screens/registrationScreen/registration_cubit.dart';
 
-class SubscriberTypeScreen extends StatefulWidget {
-  @override
-  State<SubscriberTypeScreen> createState() => _SubscriberTypeScreenState();
-}
-
-class _SubscriberTypeScreenState extends State<SubscriberTypeScreen> {
-  String selectedType = "student";
-
+class SubscriberTypeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final registredUserCubit = BlocProvider.of<RegisterCubit>(context);
     return Scaffold(
         body: Container(
             child:
@@ -22,34 +19,32 @@ class _SubscriberTypeScreenState extends State<SubscriberTypeScreen> {
       SizedBox(
         height: kVerticalSpace["meduim"],
       ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              onTap: () => setState(() {
-                selectedType = "student";
-              }),
-              child: typeUserCard(
-                  title: "Student",
-                  isActive: selectedType == "student",
-                  iconUrl: "assets/icons/student-icon.png"),
-            ),
-          ),
-          SizedBox(width: 40),
-          MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-                onTap: () => setState(() {
-                      selectedType = "prof";
-                    }),
+      BlocBuilder<RegisterCubit, RegiteredUser>(
+        builder: (context, registredUser) => Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () => registredUserCubit.updateType(isStudent: true),
                 child: typeUserCard(
-                    title: "Professor",
-                    isActive: selectedType == "prof",
-                    iconUrl: "assets/icons/prof-icon.png")),
-          ),
-        ],
+                    title: "Student",
+                    isActive: registredUser.isStudent,
+                    iconUrl: "assets/icons/student-icon.png"),
+              ),
+            ),
+            SizedBox(width: 40),
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                  onTap: () => registredUserCubit.updateType(isStudent: false),
+                  child: typeUserCard(
+                      title: "Professor",
+                      isActive: !registredUser.isStudent,
+                      iconUrl: "assets/icons/prof-icon.png")),
+            ),
+          ],
+        ),
       )
     ])));
   }
