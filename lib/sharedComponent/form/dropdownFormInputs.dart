@@ -4,9 +4,11 @@ class UnderLineDropBox extends StatelessWidget {
   IconData? icon;
   List<String> options;
   String label;
+  final String value;
   final Function? onChanged;
+  final String? Function(String?)? validator;
   UnderLineDropBox(
-      {this.icon, this.onChanged, required this.options, required this.label});
+      {this.validator,required this.value,this.icon, this.onChanged, required this.options, required this.label});
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -15,7 +17,8 @@ class UnderLineDropBox extends StatelessWidget {
         SizedBox(width: 15),
         Expanded(
           child: DropdownButtonFormField<String>(
-            value: null,
+            validator: validator,
+            value: value,
             hint: Text(label,
                 style: TextStyle(color: Color.fromRGBO(216, 214, 214, 1))),
             items: options.map((String option) {

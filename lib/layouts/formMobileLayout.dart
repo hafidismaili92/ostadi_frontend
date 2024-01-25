@@ -15,7 +15,7 @@ class FormMobileLayout extends StatelessWidget {
             Container(
               child: Center(
                   child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0),
+                padding: const EdgeInsets.symmetric(vertical: 100.0),
                 child: Column(
                   children: [
                     Image.asset(

@@ -1,41 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ostadi_frontend/constants/app_constants.dart';
-import 'package:ostadi_frontend/models/RegistreUser.dart';
-import 'package:ostadi_frontend/screens/registrationScreen/registration_cubit.dart';
+import 'package:ostadi_frontend/features/auth/presentation/cubit/registration_parts_cubits/subjects_cubit.dart';
+
+
 
 class SubjectsScreen extends StatelessWidget {
-  List<Map<String, Object>> subjects = [
+ 
+ //TODO: availableSubjects must be loaded from server (actually i test by hard coded list)
+List<Map<String, Object>> availableSubjects = [
     {
-      "id": 1,
+      "id": '1',
       "name": "Math",
       "selected": false,
       "path": "assets/icons/math.png"
     },
     {
-      "id": 2,
+      "id": '2',
       "name": "Physics",
       "selected": true,
       "path": "assets/icons/physics.png"
     },
     {
-      "id": 3,
+      "id": '3',
       "name": "Arabic",
       "selected": false,
       "path": "assets/icons/arabic.png"
     },
-    {"id": 4, "name": "SVT", "selected": true, "path": "assets/icons/svt.png"},
+    {"id": '4', "name": "SVT", "selected": true, "path": "assets/icons/svt.png"},
     {
-      "id": 5,
+      "id": '5',
       "name": "Info",
       "selected": true,
       "path": "assets/icons/programming.png"
     },
   ];
-
   @override
   Widget build(BuildContext context) {
-    final registredUserCubit = BlocProvider.of<RegisterCubit>(context);
+    final subjectsCubit = BlocProvider.of<SubjectsCubit>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
@@ -50,25 +52,23 @@ class SubjectsScreen extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineSmall),
           SizedBox(height: kVerticalSpace["meduim"]),
           Expanded(
-              child: BlocBuilder<RegisterCubit, RegiteredUser>(
-            builder: (context, registreduser) => GridView.count(
+              child: BlocBuilder<SubjectsCubit, SubjectToggledState>(
+            builder: (context, state) => GridView.count(
               shrinkWrap: true,
               crossAxisCount: 2,
               mainAxisSpacing: 20,
               crossAxisSpacing: 20,
               childAspectRatio: 1.2,
-              children: subjects
+              children: availableSubjects
                   .map((e) => Center(
                         child: MouseRegion(
                           cursor: SystemMouseCursors.click,
                           child: GestureDetector(
-                            onTap: () => registredUserCubit.updateSubjects(
-                                subjectId: e["id"]!.toString()),
+                            onTap: () => subjectsCubit.addRemoveSubject(e["id"].toString()),
                             child: SubjectItemCard(
                               imgPath: e["path"]! as String,
                               title: e["name"]! as String,
-                              isSelected: registreduser.subjects
-                                  .contains(e["id"].toString()),
+                              isSelected: (state.selectedSubjects.contains(e["id"].toString())),
                             ),
                           ),
                         ),

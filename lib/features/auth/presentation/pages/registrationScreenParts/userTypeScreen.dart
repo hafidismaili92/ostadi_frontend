@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ostadi_frontend/constants/app_constants.dart';
-import 'package:ostadi_frontend/models/RegistreUser.dart';
-import 'package:ostadi_frontend/screens/registrationScreen/registration_cubit.dart';
+import 'package:ostadi_frontend/features/auth/presentation/cubit/register_user_cubit.dart';
+import 'package:ostadi_frontend/features/auth/presentation/cubit/registration_parts_cubits/userType_cubit.dart';
+
+
 
 class SubscriberTypeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final registredUserCubit = BlocProvider.of<RegisterCubit>(context);
+    final typeUserCubit = BlocProvider.of<TypeUserCubit>(context);
     return Scaffold(
         body: Container(
             child:
@@ -19,17 +21,20 @@ class SubscriberTypeScreen extends StatelessWidget {
       SizedBox(
         height: kVerticalSpace["meduim"],
       ),
-      BlocBuilder<RegisterCubit, RegiteredUser>(
-        builder: (context, registredUser) => Row(
+      BlocBuilder<TypeUserCubit, TypeUserChangedState>(
+        builder: (context, state) => Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             MouseRegion(
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
-                onTap: () => registredUserCubit.updateType(isStudent: true),
+                onTap: ()  {
+                  typeUserCubit.switchUserType(UserTypes.student);
+                  
+                },
                 child: typeUserCard(
                     title: "Student",
-                    isActive: registredUser.isStudent,
+                    isActive: state.userType == UserTypes.student,
                     iconUrl: "assets/icons/student-icon.png"),
               ),
             ),
@@ -37,10 +42,10 @@ class SubscriberTypeScreen extends StatelessWidget {
             MouseRegion(
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
-                  onTap: () => registredUserCubit.updateType(isStudent: false),
+                  onTap: () => typeUserCubit.switchUserType(UserTypes.professor),
                   child: typeUserCard(
                       title: "Professor",
-                      isActive: !registredUser.isStudent,
+                      isActive: state.userType == UserTypes.professor ,
                       iconUrl: "assets/icons/prof-icon.png")),
             ),
           ],

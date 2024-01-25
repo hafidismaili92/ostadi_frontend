@@ -5,14 +5,20 @@ import 'package:ostadi_frontend/routes/routeController.dart';
 
 import 'package:ostadi_frontend/routes/routeNames.dart' as routeNames;
 import 'package:ostadi_frontend/themes/theme.dart';
+import 'package:ostadi_frontend/features/auth/injection_container.dart'
+    as authDI;
 
-void main() {
-  runApp(
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await authDI.init();
+  //TODO: reactive device preview to test on mobile desktop...
+  /*runApp(
     DevicePreview(
       enabled: true,
       builder: (context) => MyApp(), // Wrap your app
     ),
-  );
+  );*/
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -22,11 +28,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppTheme appTheme = AppTheme(mainColor: kAppColorSeeds["green"]!);
-    return MaterialApp(
+    //TODO: reactive device preview to test on mobile desktop...
+    /*return MaterialApp(
         title: 'Flutter Demo',
         locale: DevicePreview.locale(context),
         builder: DevicePreview.appBuilder,
-        initialRoute: routeNames.registrationScreen,
+        initialRoute: routeNames.splashScreen,
+        onGenerateRoute: RouteController,
+        theme: appTheme.light,
+        darkTheme: appTheme.dark,
+        themeMode: ThemeMode.system);
+  }*/
+  return MaterialApp(
+        title: 'Flutter Demo',
+        initialRoute: routeNames.splashScreen,
         onGenerateRoute: RouteController,
         theme: appTheme.light,
         darkTheme: appTheme.dark,
