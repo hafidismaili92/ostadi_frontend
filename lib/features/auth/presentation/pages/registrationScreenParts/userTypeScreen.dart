@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ostadi_frontend/constants/app_constants.dart';
-import 'package:ostadi_frontend/features/auth/presentation/cubit/register_user_cubit.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/registration_parts_cubits/userType_cubit.dart';
 
 

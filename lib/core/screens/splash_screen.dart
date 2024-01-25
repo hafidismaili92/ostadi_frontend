@@ -25,6 +25,11 @@ class _AppSplashScreenState extends State<AppSplashScreen>  with SingleTickerPro
     });
   }
   @override
+dispose() {
+  animController!.dispose();
+  super.dispose();
+}
+  @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
             

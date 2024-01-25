@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ostadi_frontend/features/auth/presentation/cubit/register_user_cubit.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/registration_parts_cubits/pageChange_cubit.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/registration_parts_cubits/pageview_validation_cubit.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/registration_parts_cubits/register_form_cubit.dart';
@@ -9,8 +10,10 @@ import 'package:ostadi_frontend/features/auth/presentation/cubit/registration_pa
 import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScreenParts/registerFormScreen.dart';
 import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScreenParts/studentInfoForm.dart';
 import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScreenParts/subjectsScreen.dart';
-import 'package:ostadi_frontend/models/RegistreUser.dart';
 import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScreenParts/userTypeScreen.dart';
+import 'package:ostadi_frontend/features/auth/injection_container.dart'
+    as authDI;
+import 'package:ostadi_frontend/features/auth/utils/classes/professor_parameters.dart';
 
 ///errors to display when next clicked and the current page is not valid
 const SUBJECTS_PAGE_ON_ERROR_MESSAGE = "Please Select at least one subject !";
@@ -20,6 +23,9 @@ class RegistrationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (context) => authDI.sl<RegisterUserCubit>(),
+        ),
         BlocProvider(
           create: (context) => RegisterFormCubit(),
         ),
@@ -41,13 +47,13 @@ class RegistrationScreen extends StatelessWidget {
       ],
       child: Scaffold(
           body: SafeArea(
-        child: PageViewWidget(),
+        child: RegisterScreenContainer(),
       )),
     );
   }
 }
 
-class PageViewWidget extends StatelessWidget {
+class RegisterScreenContainer extends StatelessWidget {
   PageController _pageController = PageController(initialPage: 0);
   List<Widget> buildScreens() => [
         RegisterFormScreen(),
@@ -58,6 +64,73 @@ class PageViewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = buildScreens().toList();
+    return BlocBuilder<RegisterUserCubit, RegisterUserState>(
+      builder: (context, registrationState) {
+        switch (registrationState.runtimeType) {
+          case RegisterUserLoading:
+            return Center(
+                child: CircularProgressIndicator(
+              color: Theme.of(context).colorScheme.primary,
+            ));
+          case RegisterUserSuccess:
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+               
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    radius: 30,
+                    child: Icon(Icons.check,color:Theme.of(context).colorScheme.onPrimary ,),
+                  ),
+                  const SizedBox(height: 10,),
+                  Text('Account was Succefully registered!',style: Theme.of(context).textTheme.bodyMedium!.copyWith(color:Theme.of(context).colorScheme.primary ), ),
+                  const SizedBox(height: 50,),
+                  ElevatedButton(
+                      onPressed: () => print('login'), child: const Text('Login'))
+                ],
+              ),
+            );
+            case RegisterUserError:
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Theme.of(context).colorScheme.error,
+                    radius: 30,
+                    child: Icon(Icons.error,color:Theme.of(context).colorScheme.onError,),
+                  ),
+                  const SizedBox(height: 10,),
+                  Text((registrationState as RegisterUserError).message,style: Theme.of(context).textTheme.bodyMedium!.copyWith(color:Theme.of(context).colorScheme.error ), ),
+                  const SizedBox(height: 50,),
+                  ElevatedButton(
+                      onPressed: () => print('Error'), child: const Text('Try Again'))
+                ],
+              ),
+            );
+          case RegisterUserInitial:
+          default:
+            return PageViewScreen(
+                pageController: _pageController, screens: screens);
+        }
+      },
+    );
+  }
+}
+
+class PageViewScreen extends StatelessWidget {
+  const PageViewScreen({
+    super.key,
+    required PageController pageController,
+    required this.screens,
+  }) : _pageController = pageController;
+
+  final PageController _pageController;
+  final List<Widget> screens;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         Expanded(
@@ -109,40 +182,40 @@ class PageViewWidget extends StatelessWidget {
                               //first check which page we are
                               final currentScreen =
                                   screens[_pageController.page!.toInt()];
-                              if (currentScreen is SubjectsScreen &&
-                                      BlocProvider.of<SubjectsCubit>(context)
-                                              .state
-                                              .selectedSubjects
-                                              .isEmpty) {
-                                    BlocProvider.of<PageViewCubit>(context)
-                                        .switchValidationState(false,
-                                            SUBJECTS_PAGE_ON_ERROR_MESSAGE);
-                                    return;
-                                  }
-                                  if(currentScreen is RegisterFormScreen)
-                                  {
-                                    bool isFormValid = (currentScreen as RegisterFormScreen).validate();
-                                    if(!isFormValid)
-                                    {
-                                      BlocProvider.of<PageViewCubit>(context)
-                                        .switchValidationState(false,
-                                            '');
-                                      return;
-                                    }
-                                  }
-                                  if(currentScreen is StudentInfoForm)
-                                  {
-                                    bool isFormValid = (currentScreen as StudentInfoForm).validate();
-                                    if(!isFormValid)
-                                    {
-                                      BlocProvider.of<PageViewCubit>(context)
-                                        .switchValidationState(false,
-                                            '');
-                                      return;
-                                    }
-                                  }
+                              //TODO: reactivate the below commented code to active validation when nextpage
+                              /*if (currentScreen is SubjectsScreen &&
+                                  BlocProvider.of<SubjectsCubit>(context)
+                                      .state
+                                      .selectedSubjects
+                                      .isEmpty) {
+                                BlocProvider.of<PageViewCubit>(context)
+                                    .switchValidationState(
+                                        false, SUBJECTS_PAGE_ON_ERROR_MESSAGE);
+                                return;
+                              }
+                              if (currentScreen is RegisterFormScreen) {
+                                bool isFormValid =
+                                    (currentScreen as RegisterFormScreen)
+                                        .validate();
+                                if (!isFormValid) {
+                                  BlocProvider.of<PageViewCubit>(context)
+                                      .switchValidationState(false, '');
+                                  return;
+                                }
+                              }
+                              if (currentScreen is StudentInfoForm) {
+                                bool isFormValid =
+                                    (currentScreen as StudentInfoForm)
+                                        .validate();
+                                if (!isFormValid) {
+                                  BlocProvider.of<PageViewCubit>(context)
+                                      .switchValidationState(false, '');
+                                  return;
+                                }
+                              }*/
                               //if we are not in the last page (either when student or prof)
-                              if (![2,3].contains(pageIndexState.currentPage)) {
+                              if (![2, 3]
+                                  .contains(pageIndexState.currentPage)) {
                                 //check if user is student, then navigate to next page, else navigate to page 3
                                 final userType =
                                     BlocProvider.of<TypeUserCubit>(context)
@@ -157,12 +230,11 @@ class PageViewWidget extends StatelessWidget {
                                   _pageController.jumpToPage(3);
                                 }
                               } else {
-                                //TODO -  implement registration feature
-                                print('perform registration');
+                                BlocProvider.of<RegisterUserCubit>(context).registerProfessor(params: ProfessorParams(subjects: ['1','2','3'],email: "email@email.com",password: '123456789',name:"tttt"));
                               }
                             },
                             child: Text(
-                               ![2,3].contains(pageIndexState.currentPage)
+                                ![2, 3].contains(pageIndexState.currentPage)
                                     ? 'Next'
                                     : 'Register')),
                       ],

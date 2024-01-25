@@ -5,8 +5,7 @@ import 'package:ostadi_frontend/routes/routeController.dart';
 
 import 'package:ostadi_frontend/routes/routeNames.dart' as routeNames;
 import 'package:ostadi_frontend/themes/theme.dart';
-import 'package:ostadi_frontend/features/auth/injection_container.dart'
-    as authDI;
+import 'package:ostadi_frontend/features/auth/injection_container.dart' as authDI;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +17,7 @@ void main() async {
       builder: (context) => MyApp(), // Wrap your app
     ),
   );*/
-  runApp(const MyApp());
+ runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
