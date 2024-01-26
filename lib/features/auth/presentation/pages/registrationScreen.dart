@@ -16,8 +16,8 @@ import 'package:ostadi_frontend/features/auth/injection_container.dart'
 import 'package:ostadi_frontend/features/auth/utils/classes/professor_parameters.dart';
 
 ///errors to display when next clicked and the current page is not valid
-const SUBJECTS_PAGE_ON_ERROR_MESSAGE = "Please Select at least one subject !";
-
+const String SUBJECTS_PAGE_ON_ERROR_MESSAGE = "Please Select at least one subject !";
+const String SUCCESS_MESSAGE = 'Account was Succefully registered!';
 class RegistrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -84,7 +84,7 @@ class RegisterScreenContainer extends StatelessWidget {
                     child: Icon(Icons.check,color:Theme.of(context).colorScheme.onPrimary ,),
                   ),
                   const SizedBox(height: 10,),
-                  Text('Account was Succefully registered!',style: Theme.of(context).textTheme.bodyMedium!.copyWith(color:Theme.of(context).colorScheme.primary ), ),
+                  Text(SUCCESS_MESSAGE,style: Theme.of(context).textTheme.bodyMedium!.copyWith(color:Theme.of(context).colorScheme.primary ), ),
                   const SizedBox(height: 50,),
                   ElevatedButton(
                       onPressed: () => print('login'), child: const Text('Login'))

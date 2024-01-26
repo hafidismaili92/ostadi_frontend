@@ -13,8 +13,8 @@ class MockRegisterUserRepo extends Mock implements RegisterUserRepo {}
 void main() {
   late MockRegisterUserRepo trepository;
   late RegisterProfUseCase trgprofUC;
-  const ProfEntity tprofEntity= ProfEntity(token: 'test token', avatar: '', name: 'test student');
-  ProfessorParams params = ProfessorParams(email:'test@example.com',password:'testpassword',name:'test student',avatar: '',subjects: ['1','2']);
+  const ProfEntity tprofEntity= ProfEntity(email:'test@example.com',token: 'test token', name: 'test student');
+  ProfessorParams params = ProfessorParams(email:'test@example.com',password:'testpassword',name:'test student',subjects: ['1','2']);
 
   setUp(() {
 trepository = MockRegisterUserRepo();

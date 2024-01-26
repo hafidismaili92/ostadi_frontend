@@ -12,8 +12,8 @@ class MockRegisterUserRepo extends Mock implements RegisterUserRepo {}
 void main() {
   late MockRegisterUserRepo trepository;
   late RegisterStudentUseCase tCreateStudentUC;
-  const StudentEntity tuserEntity= StudentEntity(token: 'test token', avatar: '', name: 'test student');
-  StudentParams params = StudentParams(email:'test@example.com',password:'testpassword',name:'test student',avatar: '',level:'1');
+  const StudentEntity tuserEntity= StudentEntity(email:'test@example.com',token: 'test token', name: 'test student');
+  StudentParams params = StudentParams(email:'test@example.com',password:'testpassword',name:'test student',level:'1');
 
   setUp(() {
 trepository = MockRegisterUserRepo();

@@ -6,6 +6,7 @@ import 'package:ostadi_frontend/features/auth/domain/entities/user_entity.dart';
 import 'package:ostadi_frontend/features/auth/domain/use_cases/register_prof_use_case.dart';
 import 'package:ostadi_frontend/features/auth/domain/use_cases/register_student_use_case.dart';
 import 'package:ostadi_frontend/features/auth/utils/classes/professor_parameters.dart';
+import 'package:ostadi_frontend/features/auth/utils/classes/student_parameters.dart';
 
 part 'register_user_state.dart';
 
@@ -17,17 +18,22 @@ RegisterUserCubit({required this.registerProfUC,required this.registerStudentUC}
  
 
    registerProfessor({required ProfessorParams params}) async{
-    emit(RegisterUserLoading());
+    /*emit(RegisterUserLoading());
     await Future.delayed(Duration(seconds: 3),);
     emit(RegisterUserSuccess());
-    //emit(RegisterUserError(message: mapFailureToMessage(ServerFailure())));
+    emit(RegisterUserError(message: mapFailureToMessage(ServerFailure())));*/
 
-
-    /*final result = await registerProfUC.registerNewProf(params);
-    result.fold((failure) => emit(RegisterUserError(message:mapFailureToMessage(failure))), (profEntity) => emit(RegisterUserSuccess()));*/
+    emit(RegisterUserLoading());
+    final result = await registerProfUC.registerNewProf(params);
+    result.fold((failure) => emit(RegisterUserError(message:mapFailureToMessage(failure))), (profEntity) => emit(RegisterUserSuccess()));
     
   }
 
+registerStudent({required StudentParams params}) async {
+  emit(RegisterUserLoading());
+    final result = await registerStudentUC.registerNewStudent(params);
+    result.fold((failure) => emit(RegisterUserError(message:mapFailureToMessage(failure))), (profEntity) => emit(RegisterUserSuccess()));
+}
   static String mapFailureToMessage(Failure failure)
   {
     switch(failure.runtimeType)
@@ -42,4 +48,6 @@ RegisterUserCubit({required this.registerProfUC,required this.registerStudentUC}
       return 'unkwnow Error';
     }
   }
+
+  
 }
