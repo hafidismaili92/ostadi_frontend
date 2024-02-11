@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ostadi_frontend/features/auth/presentation/cubit/load_subjects_cubit.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/register_user_cubit.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/registration_parts_cubits/pageChange_cubit.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/registration_parts_cubits/pageview_validation_cubit.dart';
@@ -11,8 +12,8 @@ import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScr
 import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScreenParts/studentInfoForm.dart';
 import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScreenParts/subjectsScreen.dart';
 import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScreenParts/userTypeScreen.dart';
-import 'package:ostadi_frontend/features/auth/injection_container.dart'
-    as authDI;
+import 'package:ostadi_frontend/core/app_dependencies_injection.dart'
+    as di;
 import 'package:ostadi_frontend/features/auth/utils/classes/professor_parameters.dart';
 
 ///errors to display when next clicked and the current page is not valid
@@ -24,11 +25,16 @@ class RegistrationScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => authDI.sl<RegisterUserCubit>(),
+          create: (context) => di.sl<RegisterUserCubit>(),
         ),
         BlocProvider(
           create: (context) => RegisterFormCubit(),
         ),
+        //for loading subjects from server
+        BlocProvider(
+          create: (context) => di.sl<LoadSubjectsCubit>(),
+        ),
+        // for selected subjects
         BlocProvider(
           create: (context) => SubjectsCubit(),
         ),

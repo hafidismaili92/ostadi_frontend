@@ -8,7 +8,7 @@ import 'package:ostadi_frontend/features/auth/utils/classes/professor_parameters
 import 'package:ostadi_frontend/features/auth/utils/classes/student_parameters.dart';
 
 class RegisterUserRepoImpl implements RegisterUserRepo{
-  final RemoteDataSource remoteDataSource;
+  final AuthRemoteDataSource remoteDataSource;
 
   RegisterUserRepoImpl({required this.remoteDataSource});
   @override

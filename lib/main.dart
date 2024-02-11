@@ -5,11 +5,11 @@ import 'package:ostadi_frontend/routes/routeController.dart';
 
 import 'package:ostadi_frontend/routes/routeNames.dart' as routeNames;
 import 'package:ostadi_frontend/themes/theme.dart';
-import 'package:ostadi_frontend/features/auth/injection_container.dart' as authDI;
+import 'package:ostadi_frontend/core/app_dependencies_injection.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await authDI.init();
+  await di.init();
   //TODO: reactive device preview to test on mobile desktop...
   /*runApp(
     DevicePreview(
