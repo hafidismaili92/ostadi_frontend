@@ -38,7 +38,7 @@ void main() {
     verify((){mockRemoteDtsrc.loadSubjects();});
     expect(res, Right(subjectsList));
   });
-  test('should return a Failure when  remote datasource throws an error', () async {
+  test('should return a Failure when  remote datasource throws an exception', () async {
     //arrange
     when(()=>mockRemoteDtsrc.loadSubjects()).thenThrow(ServerException());
     //test

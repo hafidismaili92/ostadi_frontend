@@ -4,6 +4,7 @@ import 'package:dartz/dartz_unsafe.dart';
 import 'package:ostadi_frontend/core/constants/api.dart';
 import 'package:ostadi_frontend/core/errors/exception.dart';
 import 'package:ostadi_frontend/core/services/apiService/api_service.dart';
+import 'package:ostadi_frontend/features/auth/data/models/level_model.dart';
 import 'package:ostadi_frontend/features/auth/data/models/prof_model.dart';
 import 'package:ostadi_frontend/features/auth/data/models/student_model.dart';
 import 'package:ostadi_frontend/features/auth/data/models/subject_model.dart';
@@ -14,13 +15,16 @@ abstract class AuthRemoteDataSource {
   Future<ProfModel> registerProf(ProfessorParams params);
   Future<StudentModel> registerStudent(StudentParams params);
   Future<List<SubjectModel>> loadSubjects();
+
+   Future<List<LevelModel>> loadLevels();
 }
 
 
 
 class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource{
   final ApiService apiservice;
-
+  static const String levelsEndPoint = 'profils/levels/';
+  static String subjectsEndPoint = 'profils/subjects/';
   AuthRemoteDataSourceImplementation({required this.apiservice});
   @override
   Future<ProfModel> registerProf(ProfessorParams params) {
@@ -36,8 +40,8 @@ class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource{
   
   @override
   Future<List<SubjectModel>> loadSubjects() async{
-    const String endPoint = 'subjects/subjects/';
-   final res = await apiservice.getData(Uri.parse('$BASE_URL/$endPoint'));
+   
+   final res = await apiservice.getData(Uri.parse('$BASE_URL/$subjectsEndPoint'));
    if(res.statusCode==200)
    {
     final data = res.data;
@@ -53,6 +57,26 @@ class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource{
     throw ServerException();
    }
 
+  }
+  
+  @override
+  Future<List<LevelModel>> loadLevels() async{
+    
+   final res = await apiservice.getData(Uri.parse('$BASE_URL/$levelsEndPoint'));
+   if(res.statusCode==200)
+   {
+    final data = res.data;
+    final dataJson = jsonDecode(data);
+    List<LevelModel> levelModels = [];
+    for (var subject in dataJson) {
+      levelModels.add(LevelModel.fromJson(subject));
+    }
+    return levelModels;
+   }
+   else
+   {
+    throw ServerException();
+   }
   }
 
 }

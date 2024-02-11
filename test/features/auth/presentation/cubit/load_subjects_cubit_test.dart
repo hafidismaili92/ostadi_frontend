@@ -1,6 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:ostadi_frontend/core/errors/failure.dart';
 import 'package:ostadi_frontend/features/auth/domain/entities/subject_entity.dart';

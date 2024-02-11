@@ -3,43 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ostadi_frontend/constants/app_constants.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/load_subjects_cubit.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/registration_parts_cubits/subjects_cubit.dart';
+import 'package:ostadi_frontend/features/auth/presentation/widgets/custom_error_with_retry.dart';
 
 class SubjectsScreen extends StatelessWidget {
   //a boolean to control either subjects was already loaded or not
   bool _isDataLoaded = false;
-  //TODO: availableSubjects must be loaded from server (actually i test by hard coded list)
-  List<Map<String, Object>> availableSubjects = [
-    {
-      "id": '1',
-      "name": "Math",
-      "selected": false,
-      "path": "assets/icons/math.png"
-    },
-    {
-      "id": '2',
-      "name": "Physics",
-      "selected": true,
-      "path": "assets/icons/physics.png"
-    },
-    {
-      "id": '3',
-      "name": "Arabic",
-      "selected": false,
-      "path": "assets/icons/arabic.png"
-    },
-    {
-      "id": '4',
-      "name": "SVT",
-      "selected": true,
-      "path": "assets/icons/svt.png"
-    },
-    {
-      "id": '5',
-      "name": "Info",
-      "selected": true,
-      "path": "assets/icons/programming.png"
-    },
-  ];
+ 
+
   @override
   Widget build(BuildContext context) {
     final subjectsCubit = BlocProvider.of<SubjectsCubit>(context);
@@ -104,9 +74,9 @@ class SubjectsScreen extends StatelessWidget {
                 ),
               );
           case LoadSubjectsError:
-          return ErrorWidget(errorMsg: (loadstate as LoadSubjectsError).errorMessage,);
+          return CustomErrorWidget(errorMsg: (loadstate as LoadSubjectsError).errorMessage,onRetry: () => BlocProvider.of<LoadSubjectsCubit>(context).loadSubjects());
           default:
-          return const ErrorWidget(errorMsg: "Can't Load Subjects",); 
+          return CustomErrorWidget(errorMsg: "Can't Load Subjects",onRetry: () => BlocProvider.of<LoadSubjectsCubit>(context).loadSubjects(),); 
         }
              
             },
@@ -117,22 +87,7 @@ class SubjectsScreen extends StatelessWidget {
   }
 }
 
-class ErrorWidget extends StatelessWidget {
-  final String errorMsg;
-  const ErrorWidget({
-    required this.errorMsg
-  });
 
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Column(
-      children: [
-        Text(errorMsg,style: TextStyle(color: Theme.of(context).colorScheme.error),),
-        ElevatedButton(onPressed: ()=> BlocProvider.of<LoadSubjectsCubit>(context).loadSubjects(), child: Text('Retry again'))
-      ],
-    ),);
-  }
-}
 
 class SubjectItemCard extends StatelessWidget {
   String title;

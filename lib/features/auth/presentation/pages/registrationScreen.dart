@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ostadi_frontend/features/auth/presentation/cubit/load_levels_cubit.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/load_subjects_cubit.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/register_user_cubit.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/registration_parts_cubits/pageChange_cubit.dart';
@@ -33,6 +34,10 @@ class RegistrationScreen extends StatelessWidget {
         //for loading subjects from server
         BlocProvider(
           create: (context) => di.sl<LoadSubjectsCubit>(),
+        ),
+        //for loading levels from server
+        BlocProvider(
+          create: (context) => di.sl<LoadLevelsCubit>(),
         ),
         // for selected subjects
         BlocProvider(
