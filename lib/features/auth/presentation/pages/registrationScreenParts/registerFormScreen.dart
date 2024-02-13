@@ -58,6 +58,7 @@ class RegisterFormScreen extends StatelessWidget {
                 UnderLinedTextFormInput(
                   
                     label: "Your Password",
+                    hideText: true,
                     controller: passwordTextController,
                     icon: Icons.lock_outline,
                     onChanged: (value) {
@@ -71,6 +72,7 @@ class RegisterFormScreen extends StatelessWidget {
                 UnderLinedTextFormInput(
                  
                     label: "Confirm Password",
+                    hideText: true,
                     controller: confirmpasswordTextController,
                     icon: Icons.lock,
                     onChanged: (value) {
