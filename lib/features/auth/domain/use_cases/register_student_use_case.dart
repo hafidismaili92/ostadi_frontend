@@ -12,7 +12,7 @@ class RegisterStudentUseCase {
   Future<Either<Failure,StudentEntity>> registerNewStudent(StudentParams studentParams) async
   {
     final result = await repository.registerNewStudent(studentParams);
-
+    
     return result;
   }
 }

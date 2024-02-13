@@ -13,6 +13,7 @@ class RegisterUserRepoImpl implements RegisterUserRepo{
   RegisterUserRepoImpl({required this.remoteDataSource});
   @override
   Future<Either<Failure, ProfEntity>> registerNewProfessor(ProfessorParams profParams) async {
+    
    try
    {
     final result = await remoteDataSource.registerProf(profParams);
@@ -29,6 +30,7 @@ class RegisterUserRepoImpl implements RegisterUserRepo{
 
   @override
   Future<Either<Failure, StudentEntity>> registerNewStudent(StudentParams studentParams) async {
+   
     try
    {
     final result = await remoteDataSource.registerStudent(studentParams);

@@ -18,10 +18,7 @@ RegisterUserCubit({required this.registerProfUC,required this.registerStudentUC}
  
 
    registerProfessor({required ProfessorParams params}) async{
-    /*emit(RegisterUserLoading());
-    await Future.delayed(Duration(seconds: 3),);
-    emit(RegisterUserSuccess());
-    emit(RegisterUserError(message: mapFailureToMessage(ServerFailure())));*/
+    
 
     emit(RegisterUserLoading());
     final result = await registerProfUC.registerNewProf(params);
@@ -30,10 +27,14 @@ RegisterUserCubit({required this.registerProfUC,required this.registerStudentUC}
   }
 
 registerStudent({required StudentParams params}) async {
+  
   emit(RegisterUserLoading());
     final result = await registerStudentUC.registerNewStudent(params);
+    
     result.fold((failure) => emit(RegisterUserError(message:mapFailureToMessage(failure))), (profEntity) => emit(RegisterUserSuccess()));
 }
+
+
   static String mapFailureToMessage(Failure failure)
   {
     switch(failure.runtimeType)

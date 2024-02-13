@@ -6,6 +6,6 @@ class SubjectModel extends Subject {
   factory SubjectModel.fromJson(Map<String,dynamic> jsonFormat)
   {
     
-    return SubjectModel(id:jsonFormat['id'],title: jsonFormat['title'],icon: jsonFormat['icon']  );
+    return SubjectModel(id:'${jsonFormat['id']}',title: jsonFormat['title'],icon: jsonFormat['icon']  );
   }
 }

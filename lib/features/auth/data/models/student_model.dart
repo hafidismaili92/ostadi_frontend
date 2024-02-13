@@ -5,6 +5,6 @@ class StudentModel extends StudentEntity{
 
   factory StudentModel.fromJson(Map<String,dynamic> jsonFormat)
   {
-    return StudentModel(email:jsonFormat['email'],level:jsonFormat['student_account']['level']??'',avatar: jsonFormat['avatar']??'',name: jsonFormat['name']??'');
+    return StudentModel(email:jsonFormat['email'],level:jsonFormat['student_account'] != null ?jsonFormat['student_account']['level']??'':'',avatar: jsonFormat['avatar']??'',name: jsonFormat['name']??'');
   }
 }

@@ -6,6 +6,6 @@ class LevelModel extends Level {
   factory LevelModel.fromJson(Map<String,dynamic> jsonFormat)
   {
     
-    return LevelModel(id:jsonFormat['id'],title: jsonFormat['title'],);
+    return LevelModel(id:'${jsonFormat['id']}',title: jsonFormat['title'],);
   }
 }

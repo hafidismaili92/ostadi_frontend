@@ -6,8 +6,10 @@ import 'package:ostadi_frontend/core/errors/exception.dart';
 import 'package:ostadi_frontend/core/services/apiService/api_service.dart';
 import 'package:ostadi_frontend/features/auth/data/data_sources/remote_dataSource.dart';
 import 'package:ostadi_frontend/features/auth/data/models/level_model.dart';
+import 'package:ostadi_frontend/features/auth/data/models/prof_model.dart';
 import 'package:ostadi_frontend/features/auth/data/models/student_model.dart';
 import 'package:ostadi_frontend/features/auth/data/models/subject_model.dart';
+import 'package:ostadi_frontend/features/auth/utils/classes/professor_parameters.dart';
 import 'package:ostadi_frontend/features/auth/utils/classes/student_parameters.dart';
 import 'package:test/test.dart';
 
@@ -139,12 +141,49 @@ void main() {
   });
 
   group('test add user', (){
-
-    test('add new student',(){
-      StudentParams studentparams = StudentParams(level: '1', email: 'teststudent@gmail.com', password: '123456789', name: 'test student');
-      String StudentModelString = '{email:"testemail@example.com"}';
+    setUp((){
+      // to enable use any on Uri class
+      registerFallbackValue(Uri());
+    });
+    test('add new student success',() async{
+      StudentParams studentparams = StudentParams(level: '1', email: 'dfff@example.com', password: '123456789', name: 'test student');
+      Map<String,dynamic> studentModelJson = {"email": studentparams.email };
+      StudentModel tstudentmodel = StudentModel.fromJson(studentModelJson);
+      //arrange
+      when(()=>apiService.postData(any(), studentparams.toJson())).thenAnswer((_) async => HttpResponse(statusCode: 201, data: jsonEncode(studentModelJson)));
       //test 
-      final res = remotedsImpl.registerStudent(studentparams);
+
+      final res = await remotedsImpl.registerStudent(studentparams);
+      
+      //assert
+      expect(res, tstudentmodel);
+    });
+
+    test('add new professpr success',() async{
+      ProfessorParams profparams = ProfessorParams(subjects: ['1','2'], email: 'dfff@example.com', password: '123456789', name: 'test student');
+      Map<String,dynamic> profModelJson = {"email":  profparams.email };
+      ProfModel tprofmodel = ProfModel.fromJson(profModelJson);
+      
+      //arrange
+      when(()=>apiService.postData(any(), profparams.toJson())).thenAnswer((_) async => HttpResponse(statusCode: 201, data: jsonEncode(profModelJson)));
+      //test 
+
+      final res = await remotedsImpl.registerProf(profparams);
+      
+      //assert
+      expect(res, tprofmodel);
+    });
+    test('add new student failed',() {
+      StudentParams studentparams = StudentParams(level: '1', email: 'teststudent@gmail.com', password: '123456789', name: 'test student');
+      Map<String,dynamic> studentModelJson = {"email": studentparams.email };
+      
+      //arrange
+      when(()=>apiService.postData(any(), studentparams.toJson())).thenAnswer((_) async => HttpResponse(statusCode: 400, data: ''));
+      //test 
+      final call = remotedsImpl.registerStudent;
+      
+      //assert
+      expect(()=> call(studentparams), throwsA(TypeMatcher<ServerException>()));
     });
   });
 }

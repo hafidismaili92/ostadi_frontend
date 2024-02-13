@@ -24,18 +24,36 @@ abstract class AuthRemoteDataSource {
 class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource{
   final ApiService apiservice;
   static const String levelsEndPoint = 'profils/levels/';
-  static String subjectsEndPoint = 'profils/subjects/';
+  static const String subjectsEndPoint = 'profils/subjects/';
+  static const String createUserEndPoint ='user/create/';
   AuthRemoteDataSourceImplementation({required this.apiservice});
   @override
-  Future<ProfModel> registerProf(ProfessorParams params) {
-    // TODO: implement registerProf
-    throw UnimplementedError();
+  Future<ProfModel> registerProf(ProfessorParams params) async{
+    final res = await apiservice.postData(Uri.parse('$BASE_URL/$createUserEndPoint'),params.toJson());
+    print(res.data);
+    if(res.statusCode==201)
+    {
+      return ProfModel.fromJson(jsonDecode(res.data));
+    }
+    else
+   {
+    throw ServerException();
+   }
   }
 
   @override
-  Future<StudentModel> registerStudent(StudentParams params) {
-    // TODO: implement registerStudent
-    throw UnimplementedError();
+  Future<StudentModel> registerStudent(StudentParams params) async {
+    
+    final res = await apiservice.postData(Uri.parse('$BASE_URL/$createUserEndPoint'),params.toJson());
+  
+    if(res.statusCode==201)
+    {
+      return StudentModel.fromJson(jsonDecode(res.data));
+    }
+    else
+   {
+    throw ServerException();
+   }
   }
   
   @override

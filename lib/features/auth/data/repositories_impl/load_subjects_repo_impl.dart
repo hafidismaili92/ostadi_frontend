@@ -23,6 +23,7 @@ class LoadSubjectsRepoImpl implements LoadSubjectsRepository {
         return Left(ServerFailure());
       }
       catch (e){
+        
         return Left(UnknownFailure());
       }
     } else {

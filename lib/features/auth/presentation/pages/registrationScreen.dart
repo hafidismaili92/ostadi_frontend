@@ -13,13 +13,15 @@ import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScr
 import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScreenParts/studentInfoForm.dart';
 import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScreenParts/subjectsScreen.dart';
 import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScreenParts/userTypeScreen.dart';
-import 'package:ostadi_frontend/core/app_dependencies_injection.dart'
-    as di;
+import 'package:ostadi_frontend/core/app_dependencies_injection.dart' as di;
 import 'package:ostadi_frontend/features/auth/utils/classes/professor_parameters.dart';
+import 'package:ostadi_frontend/features/auth/utils/classes/student_parameters.dart';
 
 ///errors to display when next clicked and the current page is not valid
-const String SUBJECTS_PAGE_ON_ERROR_MESSAGE = "Please Select at least one subject !";
+const String SUBJECTS_PAGE_ON_ERROR_MESSAGE =
+    "Please Select at least one subject !";
 const String SUCCESS_MESSAGE = 'Account was Succefully registered!';
+
 class RegistrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -87,22 +89,35 @@ class RegisterScreenContainer extends StatelessWidget {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-               
                 children: [
                   CircleAvatar(
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     radius: 30,
-                    child: Icon(Icons.check,color:Theme.of(context).colorScheme.onPrimary ,),
+                    child: Icon(
+                      Icons.check,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
-                  const SizedBox(height: 10,),
-                  Text(SUCCESS_MESSAGE,style: Theme.of(context).textTheme.bodyMedium!.copyWith(color:Theme.of(context).colorScheme.primary ), ),
-                  const SizedBox(height: 50,),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    SUCCESS_MESSAGE,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(color: Theme.of(context).colorScheme.primary),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
                   ElevatedButton(
-                      onPressed: () => print('login'), child: const Text('Login'))
+                      onPressed: () => print('login'),
+                      child: const Text('Login'))
                 ],
               ),
             );
-            case RegisterUserError:
+          case RegisterUserError:
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -110,13 +125,44 @@ class RegisterScreenContainer extends StatelessWidget {
                   CircleAvatar(
                     backgroundColor: Theme.of(context).colorScheme.error,
                     radius: 30,
-                    child: Icon(Icons.error,color:Theme.of(context).colorScheme.onError,),
+                    child: Icon(
+                      Icons.error,
+                      color: Theme.of(context).colorScheme.onError,
+                    ),
                   ),
-                  const SizedBox(height: 10,),
-                  Text((registrationState as RegisterUserError).message,style: Theme.of(context).textTheme.bodyMedium!.copyWith(color:Theme.of(context).colorScheme.error ), ),
-                  const SizedBox(height: 50,),
-                  ElevatedButton(
-                      onPressed: () => print('Error'), child: const Text('Try Again'))
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    (registrationState as RegisterUserError).message,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(color: Theme.of(context).colorScheme.error),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            final userType =
+                                      BlocProvider.of<TypeUserCubit>(context)
+                                          .state
+                                          .userType;
+                            registerUser(context, userType);
+                          },
+                          child: const Text('Try Again')),
+                          const SizedBox(width: 20,),
+                          OutlinedButton(onPressed:(){
+                            BlocProvider.of<PageChangeCubit>(context).setCurrentPageIndex(0);
+                            BlocProvider.of<RegisterUserCubit>(context).emit(RegisterUserInitial());
+                          } , child: const Text('Back to Register Page'))
+
+                    ],
+                  )
                 ],
               ),
             );
@@ -224,14 +270,16 @@ class PageViewScreen extends StatelessWidget {
                                   return;
                                 }
                               }*/
+                              //get userType
+                              final userType =
+                                  BlocProvider.of<TypeUserCubit>(context)
+                                      .state
+                                      .userType;
                               //if we are not in the last page (either when student or prof)
                               if (![2, 3]
                                   .contains(pageIndexState.currentPage)) {
                                 //check if user is student, then navigate to next page, else navigate to page 3
-                                final userType =
-                                    BlocProvider.of<TypeUserCubit>(context)
-                                        .state
-                                        .userType;
+
                                 if (userType == UserTypes.student) {
                                   _pageController.nextPage(
                                     duration: Duration(milliseconds: 500),
@@ -241,7 +289,7 @@ class PageViewScreen extends StatelessWidget {
                                   _pageController.jumpToPage(3);
                                 }
                               } else {
-                                BlocProvider.of<RegisterUserCubit>(context).registerProfessor(params: ProfessorParams(subjects: ['1','2','3'],email: "email@email.com",password: '123456789',name:"tttt"));
+                                registerUser(context,userType);
                               }
                             },
                             child: Text(
@@ -267,4 +315,30 @@ class PageViewScreen extends StatelessWidget {
       ],
     );
   }
+
+  
 }
+
+void registerUser(context, userType) {
+    final email = BlocProvider.of<RegisterFormCubit>(context).state.email;
+    final password = BlocProvider.of<RegisterFormCubit>(context).state.password;
+    final name = BlocProvider.of<RegisterFormCubit>(context).state.name;
+    //if student
+    if (userType == UserTypes.student) {
+     
+      final level = BlocProvider.of<StudentInfoFormCubit>(context).state.level;
+       
+      BlocProvider.of<RegisterUserCubit>(context).registerStudent(
+          params: StudentParams(
+              level: level, email: email, password: password, name: name));
+    } else if (userType == UserTypes.professor) {
+      final subjects =
+          BlocProvider.of<SubjectsCubit>(context).state.selectedSubjects;
+      BlocProvider.of<RegisterUserCubit>(context).registerProfessor(
+          params: ProfessorParams(
+              subjects: subjects,
+              email: email,
+              password: password,
+              name: name));
+    }
+  }
