@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class UnderLineDropBox extends StatelessWidget {
   IconData? icon;
-  List<DropdownMenuItem<int>> options;
+  List<DropdownMenuItem<String>> options;
   String label;
-  final int value;
+  final String value;
   final Function? onChanged;
-  final String? Function(int?)? validator;
+  final String? Function(String?)? validator;
   UnderLineDropBox(
       {this.validator,required this.value,this.icon, this.onChanged, required this.options, required this.label});
   @override
@@ -16,7 +16,7 @@ class UnderLineDropBox extends StatelessWidget {
         if (icon != null) Icon(icon),
         SizedBox(width: 15),
         Expanded(
-          child: DropdownButtonFormField<int>(
+          child: DropdownButtonFormField<String>(
             validator: validator,
             value: value,
             hint: Text(label,

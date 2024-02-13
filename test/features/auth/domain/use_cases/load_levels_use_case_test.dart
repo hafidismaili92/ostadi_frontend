@@ -15,8 +15,8 @@ void main() {
   MockLoadLevelsRepository repository = MockLoadLevelsRepository();
 
   List<Level> levelsList = [
-    Level(id: 1, title: 'test level 1'),
-    Level(id: 2, title: 'test level 2'),
+    Level(id: '1', title: 'test level 1'),
+    Level(id: '2', title: 'test level 2'),
   ];
   setUp((){
     testLoadLevelsUC = LoadLevelsUseCase(repository: repository);

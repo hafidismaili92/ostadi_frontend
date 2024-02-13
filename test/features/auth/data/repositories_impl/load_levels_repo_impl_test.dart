@@ -16,9 +16,9 @@ void main() {
   MockRemoteDataSource remoteDS = MockRemoteDataSource();
    MockConnectioninfo connectioninfo = MockConnectioninfo();
   List<LevelModel> levelsList = [
-    LevelModel(id: 1, title: 'test subject 1',),
-    LevelModel(id: 2, title: 'test subject 2',),
-    LevelModel(id: 3, title: 'test subject 3',)
+    LevelModel(id: '1', title: 'test subject 1',),
+    LevelModel(id: '2', title: 'test subject 2',),
+    LevelModel(id: '3', title: 'test subject 3',)
   ];
   List<Level> levelsEntitties = levelsList;
   setUp(() {

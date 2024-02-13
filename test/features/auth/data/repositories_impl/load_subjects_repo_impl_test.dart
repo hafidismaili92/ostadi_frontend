@@ -17,9 +17,9 @@ void main() {
   MockRemoteDataSource mockRemoteDtsrc = MockRemoteDataSource();
   MockConnectioninfo connectioninfo = MockConnectioninfo();
    List<SubjectModel> subjectsList = [
-    SubjectModel(id: 1, title: 'test subject 1', icon: 'test icon 1'),
-    SubjectModel(id: 2, title: 'test subject 2', icon: 'test icon 2'),
-    SubjectModel(id: 3, title: 'test subject 3', icon: 'test icon 3')
+    SubjectModel(id: '1', title: 'test subject 1', icon: 'test icon 1'),
+    SubjectModel(id: '2', title: 'test subject 2', icon: 'test icon 2'),
+    SubjectModel(id: '3', title: 'test subject 3', icon: 'test icon 3')
   ];
   setUp(() => {
     tloadsubjectsrepo = LoadSubjectsRepoImpl(remoteDataSource: mockRemoteDtsrc,connectionInfo: connectioninfo)

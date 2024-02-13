@@ -62,7 +62,7 @@ bool _isDataLoaded = false;
                             UnderLineDropBox(
                               icon: Icons.school_outlined,
                               options: levels.map((level) {
-              return DropdownMenuItem<int>(
+              return DropdownMenuItem<String>(
                 value: level.id,
                 child: Expanded(
                     child: Text(

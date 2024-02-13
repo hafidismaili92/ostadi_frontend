@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
 
 class StudentInfoFormCubit extends Cubit<StudentInfoFormState> {
-  StudentInfoFormCubit():super(StudentInfoFormState(level:0));
+  StudentInfoFormCubit():super(StudentInfoFormState(level:'0'));
 
 
 
-void updateLevel(int level){
+void updateLevel(String level){
 
   emit(state.copyWith(level: level));
 }
@@ -15,11 +15,11 @@ void updateLevel(int level){
 //state
 class StudentInfoFormState {
 
-final int level;
+final String level;
 
 StudentInfoFormState({required this.level});
 
-StudentInfoFormState copyWith({int? level})
+StudentInfoFormState copyWith({String? level})
 {
   return StudentInfoFormState( level : level ?? this.level);
 }

@@ -10,9 +10,9 @@ import 'package:ostadi_frontend/features/auth/presentation/cubit/load_levels_cub
 class MockLoadLevelsUseCase extends Mock implements LoadLevelsUseCase{}
 void main() {
   List<Level> levelsList = [
-    Level(id: 1, title: 'test Level 1'),
-    Level(id: 2, title: 'test Level 2'),
-    Level(id: 3, title: 'test Level 3')
+    Level(id: '1', title: 'test Level 1'),
+    Level(id: '2', title: 'test Level 2'),
+    Level(id: '3', title: 'test Level 3')
   ];
   MockLoadLevelsUseCase loadLevelsUC  = MockLoadLevelsUseCase();
  blocTest<LoadLevelsCubit,LoadLevelsState>('should emits a [LoadLevelsLoading, LoadLevelssuccess with Levels list] when use case called and it return a list of Levels', setUp: (){

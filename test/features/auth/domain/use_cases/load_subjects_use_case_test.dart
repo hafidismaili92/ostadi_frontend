@@ -13,9 +13,9 @@ void main() {
   late LoadSubjectsUseCase loadSubjectsUC;
   MockLoadSubjectsRepo mockRepository = MockLoadSubjectsRepo();
   List<Subject> subjectsList = [
-    Subject(id: 1, title: 'test subject 1', icon: 'test icon 1'),
-    Subject(id: 2, title: 'test subject 2', icon: 'test icon 2'),
-    Subject(id: 3, title: 'test subject 3', icon: 'test icon 3')
+    Subject(id: '1', title: 'test subject 1', icon: 'test icon 1'),
+    Subject(id: '2', title: 'test subject 2', icon: 'test icon 2'),
+    Subject(id: '3', title: 'test subject 3', icon: 'test icon 3')
   ];
   setUp(() {
     loadSubjectsUC = LoadSubjectsUseCase(repository: mockRepository);
