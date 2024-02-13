@@ -6,7 +6,9 @@ import 'package:ostadi_frontend/core/errors/exception.dart';
 import 'package:ostadi_frontend/core/services/apiService/api_service.dart';
 import 'package:ostadi_frontend/features/auth/data/data_sources/remote_dataSource.dart';
 import 'package:ostadi_frontend/features/auth/data/models/level_model.dart';
+import 'package:ostadi_frontend/features/auth/data/models/student_model.dart';
 import 'package:ostadi_frontend/features/auth/data/models/subject_model.dart';
+import 'package:ostadi_frontend/features/auth/utils/classes/student_parameters.dart';
 import 'package:test/test.dart';
 
 class MockApiService extends Mock implements ApiService {}
@@ -134,5 +136,15 @@ void main() {
       expect(() => call(), throwsA(TypeMatcher<ServerException>()));
     });
     
+  });
+
+  group('test add user', (){
+
+    test('add new student',(){
+      StudentParams studentparams = StudentParams(level: '1', email: 'teststudent@gmail.com', password: '123456789', name: 'test student');
+      String StudentModelString = '{email:"testemail@example.com"}';
+      //test 
+      final res = remotedsImpl.registerStudent(studentparams);
+    });
   });
 }

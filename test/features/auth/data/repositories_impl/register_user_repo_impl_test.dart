@@ -26,7 +26,7 @@ void main() {
       tRepo = RegisterUserRepoImpl(remoteDataSource: tremoteDS);
     });
   group('test register prof', () {
-    ProfModel tprofModel = ProfModel(email: 'test@example.com', token: 'testtoken', name: 'test prof');
+    ProfModel tprofModel = ProfModel(subjects: ['1','2'],email: 'test@example.com', avatar: 'testavatar', name: 'test prof');
   ProfEntity tprofEntity = tprofModel;
     ProfessorParams params = ProfessorParams(email:'test@example.com',password:'testpassword',name:'test prof',subjects: ['1','2']);
     test('should return a Right(ProfEntity) when datasource return data succefully',() async {
@@ -53,7 +53,7 @@ void main() {
   });
 
   group('test register student', () {
-    StudentModel tstudentModel = StudentModel(email: 'test@example.com', token: 'testtoken', name: 'test prof');
+    StudentModel tstudentModel = StudentModel(level:'1',email: 'test@example.com', avatar: 'testavatar', name: 'test prof');
   StudentEntity tstudentEntity = tstudentModel;
     StudentParams params = StudentParams(email:'test@example.com',password:'testpassword',name:'test prof',level:'1');
     test('should return a Right(StudentEntity) when datasource return data succefully',() async {

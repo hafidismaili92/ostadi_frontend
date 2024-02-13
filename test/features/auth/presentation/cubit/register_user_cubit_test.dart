@@ -22,11 +22,11 @@ void main() {
     registerFallbackValue(ProfParamsFake());
   });*/
 group('test create prof cubit', () {
-  const tProfEntity = ProfEntity(token: 'abcdefghtjkjdfdkfjdf', name: '',email: 'test@example.com');
+  ProfEntity tProfEntity = ProfEntity(subjects: ['1','2'],avatar: 'testavatar', name: '',email: 'test@example.com');
   ProfessorParams tProfParams = ProfessorParams(subjects: ['1','2','3'],email: tProfEntity.email,password: '123456789',name:tProfEntity.name);
   blocTest<RegisterUserCubit, RegisterUserState>(
   
-  'emits [RegisterUserLoading,RegisterUserSuccess with token] when registerProfessor is called.',
+  'emits [RegisterUserLoading,RegisterUserSuccess with avatar] when registerProfessor is called.',
   setUp: (){
     when(()=> mockRegisterProfUC.registerNewProf(tProfParams)).thenAnswer((_) async => Right(tProfEntity));
   },
@@ -38,7 +38,7 @@ group('test create prof cubit', () {
 
 blocTest<RegisterUserCubit, RegisterUserState>(
   
-  'emits [RegisterUserLoading,RegisterUserError with token] when registerProfessor is called.',
+  'emits [RegisterUserLoading,RegisterUserError with avatar] when registerProfessor is called.',
   setUp: (){
     when(()=> mockRegisterProfUC.registerNewProf(tProfParams)).thenAnswer((_) async => Left(ServerFailure()));
   },
@@ -50,11 +50,11 @@ blocTest<RegisterUserCubit, RegisterUserState>(
 });
 
 group('test create student cubit', () {
-  const tStudentEntity = StudentEntity(token: 'abcdefghtjkjdfdkfjdf', name: '',email: 'test@example.com');
+  StudentEntity tStudentEntity = StudentEntity(level: '1',avatar: 'abcdefghtjkjdfdkfjdf', name: '',email: 'test@example.com');
   StudentParams tStudentParams = StudentParams(level:'1',email: tStudentEntity.email,password: '123456789',name:tStudentEntity.name);
   blocTest<RegisterUserCubit, RegisterUserState>(
   
-  'emits [RegisterUserLoading,RegisterUserSuccess with token] when registerProfessor is called.',
+  'emits [RegisterUserLoading,RegisterUserSuccess with avatar] when registerProfessor is called.',
   setUp: (){
     when(()=> mockRegisterStudentUC.registerNewStudent(tStudentParams)).thenAnswer((_) async => Right(tStudentEntity));
   },
@@ -66,7 +66,7 @@ group('test create student cubit', () {
 
 blocTest<RegisterUserCubit, RegisterUserState>(
   
-  'emits [RegisterUserLoading,RegisterUserError with token] when registerProfessor is called.',
+  'emits [RegisterUserLoading,RegisterUserError with avatar] when registerProfessor is called.',
   setUp: (){
     when(()=> mockRegisterStudentUC.registerNewStudent(tStudentParams)).thenAnswer((_) async => Left(ServerFailure()));
   },

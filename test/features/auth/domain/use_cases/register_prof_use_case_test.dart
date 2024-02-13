@@ -13,7 +13,7 @@ class MockRegisterUserRepo extends Mock implements RegisterUserRepo {}
 void main() {
   late MockRegisterUserRepo trepository;
   late RegisterProfUseCase trgprofUC;
-  const ProfEntity tprofEntity= ProfEntity(email:'test@example.com',token: 'test token', name: 'test student');
+  ProfEntity tprofEntity= ProfEntity(email:'test@example.com',avatar: 'test avatar', name: 'test student',subjects: ['1','2']);
   ProfessorParams params = ProfessorParams(email:'test@example.com',password:'testpassword',name:'test student',subjects: ['1','2']);
 
   setUp(() {
@@ -23,7 +23,7 @@ trgprofUC = RegisterProfUseCase(repository: trepository);
   test('should return a ProfessorEntity when call to repository return this ProfessorEntity',() async {
 
     //arrange
-    when(()=> trepository.registerNewProfessor(params)).thenAnswer((_) async => const Right(tprofEntity) );
+    when(()=> trepository.registerNewProfessor(params)).thenAnswer((_) async => Right(tprofEntity) );
     //act
     final result = await trgprofUC.registerNewProf(params);
     //assert

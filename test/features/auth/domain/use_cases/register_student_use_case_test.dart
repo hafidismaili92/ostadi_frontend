@@ -12,7 +12,7 @@ class MockRegisterUserRepo extends Mock implements RegisterUserRepo {}
 void main() {
   late MockRegisterUserRepo trepository;
   late RegisterStudentUseCase tCreateStudentUC;
-  const StudentEntity tuserEntity= StudentEntity(email:'test@example.com',token: 'test token', name: 'test student');
+  StudentEntity tuserEntity= StudentEntity(level: '1',email:'test@example.com',avatar: 'test avatar', name: 'test student');
   StudentParams params = StudentParams(email:'test@example.com',password:'testpassword',name:'test student',level:'1');
 
   setUp(() {
@@ -22,7 +22,7 @@ tCreateStudentUC = RegisterStudentUseCase(repository: trepository);
   test('should return a userEntity when call to repository return this userEntity',() async {
 
     //arrange
-    when(()=> trepository.registerNewStudent(params)).thenAnswer((_) async => const Right(tuserEntity) );
+    when(()=> trepository.registerNewStudent(params)).thenAnswer((_) async => Right(tuserEntity) );
     //act
     final result = await tCreateStudentUC.registerNewStudent(params);
     //assert

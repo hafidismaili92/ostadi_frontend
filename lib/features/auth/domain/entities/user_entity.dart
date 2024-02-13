@@ -1,26 +1,29 @@
 import 'package:equatable/equatable.dart';
 
 abstract class UserEntity extends Equatable {
-final String token;
+final String avatar;
 final String name;
 final String email;
-  const UserEntity({required this.email,required this.token,required this.name});
+  const UserEntity({required this.email,required this.avatar,required this.name});
   
   @override
-  List<Object?> get props => [token,name,email];
+  List<Object?> get props => [avatar,name,email];
 
 }
 
 class StudentEntity extends UserEntity {
-  
-  const StudentEntity( {required super.email,required super.token, required super.name});
-
+  String level;
+  StudentEntity( {required this.level,required super.email,required super.avatar, required super.name});
+   @override
+  List<Object?> get props => [avatar,name,email,level];
 }
 
 class ProfEntity extends UserEntity {
+  List<String> subjects;
+  ProfEntity({required this.subjects,required super.email,required super.avatar,required super.name});
+  @override
+  List<Object?> get props => [avatar,name,email,subjects];
   
-  const ProfEntity({required super.email,required super.token,required super.name});
-
 }
 
 
