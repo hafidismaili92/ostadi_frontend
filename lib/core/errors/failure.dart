@@ -13,6 +13,11 @@ class ConnectionFailure extends Failure{
   @override
   List<Object?> get props => [];
 }
+class UnauthenticatedFailure extends Failure
+{
+   @override
+  List<Object?> get props => [];
+}
 class UnknownFailure extends Failure{
   @override
   List<Object?> get props => [];

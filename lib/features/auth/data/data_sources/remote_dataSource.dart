@@ -8,6 +8,7 @@ import 'package:ostadi_frontend/features/auth/data/models/level_model.dart';
 import 'package:ostadi_frontend/features/auth/data/models/prof_model.dart';
 import 'package:ostadi_frontend/features/auth/data/models/student_model.dart';
 import 'package:ostadi_frontend/features/auth/data/models/subject_model.dart';
+import 'package:ostadi_frontend/features/auth/utils/classes/login_params.dart';
 import 'package:ostadi_frontend/features/auth/utils/classes/professor_parameters.dart';
 import 'package:ostadi_frontend/features/auth/utils/classes/student_parameters.dart';
 
@@ -15,7 +16,7 @@ abstract class AuthRemoteDataSource {
   Future<ProfModel> registerProf(ProfessorParams params);
   Future<StudentModel> registerStudent(StudentParams params);
   Future<List<SubjectModel>> loadSubjects();
-
+  Future<String> getToken(Loginparams params);
    Future<List<LevelModel>> loadLevels();
 }
 
@@ -26,6 +27,7 @@ class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource{
   static const String levelsEndPoint = 'profils/levels/';
   static const String subjectsEndPoint = 'profils/subjects/';
   static const String createUserEndPoint ='user/create/';
+  static const String getTokenEndPoint = 'user/token-auth/';
   AuthRemoteDataSourceImplementation({required this.apiservice});
   @override
   Future<ProfModel> registerProf(ProfessorParams params) async{
@@ -95,6 +97,12 @@ class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource{
    {
     throw ServerException();
    }
+  }
+  
+  @override
+  Future<String> getToken(Loginparams params) {
+    // TODO: implement getToken
+    throw UnimplementedError();
   }
 
 }
