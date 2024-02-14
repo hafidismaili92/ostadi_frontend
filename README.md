@@ -1,6 +1,5 @@
 # OSTADI (front_end part)
 
-A new Flutter project.
 
 ## Overview
 
