@@ -3,7 +3,7 @@ import 'package:ostadi_frontend/core/screens/splash_screen.dart';
 //routeNames
 import 'package:ostadi_frontend/routes/routeNames.dart' as routeNames;
 import 'package:ostadi_frontend/screens/firstScreen/firstScreen.dart';
-import 'package:ostadi_frontend/screens/loginScreen/loginScreen.dart';
+import 'package:ostadi_frontend/features/auth/presentation/pages/loginScreen.dart';
 import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScreen.dart';
 
 //TODO:apply guards

@@ -1,6 +1,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ostadi_frontend/constants/assets.dart';
+import 'package:ostadi_frontend/features/auth/presentation/pages/loginScreen.dart';
 import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScreen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:lottie/lottie.dart';
@@ -46,7 +47,8 @@ dispose() {
                CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary,)
               ],
             ),
-            nextScreen: RegistrationScreen(),
+            //nextScreen: RegistrationScreen(),
+            nextScreen: LoginScreen(),
             splashTransition: SplashTransition.fadeTransition,
             //pageTransitionType: PageTransitionType.scale,
             backgroundColor: Theme.of(context).colorScheme.primary);

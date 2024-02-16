@@ -100,9 +100,25 @@ class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource{
   }
   
   @override
-  Future<String> getToken(Loginparams params) {
-    // TODO: implement getToken
-    throw UnimplementedError();
+  Future<String> getToken(Loginparams params) async {
+   
+  
+  final res = await apiservice.postData(Uri.parse('$BASE_URL/$getTokenEndPoint'),params.toJson());
+  if(res.statusCode==200)
+  {
+    return res.data;
+  }
+  else if([400,401].contains(res.statusCode))
+  {
+    throw UnauthenticatedException();
+  }
+  else
+  {
+    throw ServerException();
+  }
+  
+
+
   }
 
 }

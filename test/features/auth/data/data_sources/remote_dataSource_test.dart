@@ -9,6 +9,7 @@ import 'package:ostadi_frontend/features/auth/data/models/level_model.dart';
 import 'package:ostadi_frontend/features/auth/data/models/prof_model.dart';
 import 'package:ostadi_frontend/features/auth/data/models/student_model.dart';
 import 'package:ostadi_frontend/features/auth/data/models/subject_model.dart';
+import 'package:ostadi_frontend/features/auth/utils/classes/login_params.dart';
 import 'package:ostadi_frontend/features/auth/utils/classes/professor_parameters.dart';
 import 'package:ostadi_frontend/features/auth/utils/classes/student_parameters.dart';
 import 'package:test/test.dart';
@@ -25,6 +26,10 @@ void main() {
 
 
   });
+  setUpAll((){
+      // to enable use any on Uri class
+      registerFallbackValue(Uri());
+    });
   group('test subjects', () {
     
     const String subjectsDataString =
@@ -141,10 +146,7 @@ void main() {
   });
 
   group('test add user', (){
-    setUp((){
-      // to enable use any on Uri class
-      registerFallbackValue(Uri());
-    });
+    
     test('add new student success',() async{
       StudentParams studentparams = StudentParams(level: '1', email: 'dfff@example.com', password: '123456789', name: 'test student');
       Map<String,dynamic> studentModelJson = {"email": studentparams.email };
@@ -184,6 +186,34 @@ void main() {
       
       //assert
       expect(()=> call(studentparams), throwsA(TypeMatcher<ServerException>()));
+    });
+  });
+
+  group('test get token', () {
+    test('should return token response when sevrer response success', () async {
+      //arrange
+      final loginparams = Loginparams(email: 'test@example.com', password: 'testpassword');
+       when(()=>apiService.postData(any(), loginparams.toJson())).thenAnswer((_) async => HttpResponse(statusCode: 200, data: 'tokentest'));
+      //test
+      final res = await remotedsImpl.getToken(loginparams);
+      expect(res, 'tokentest');
+    });
+
+    test('should throw Unauthrized exception when server respond with 401 Unauthorized status', ()  {
+      //arrange
+      final loginparams = Loginparams(email: 'test@example.com', password: 'testpassword');
+       when(()=>apiService.postData(any(), loginparams.toJson())).thenAnswer((_) async => HttpResponse(statusCode: 401, data: ''));
+      //test
+      final call = remotedsImpl.getToken;
+      expect(()=>call(loginparams), throwsA(TypeMatcher<UnauthenticatedException>()));
+    });
+    test('should throw server exception when server respond with status !=200 and != 401', ()  {
+      //arrange
+      final loginparams = Loginparams(email: 'test@example.com', password: 'testpassword');
+       when(()=>apiService.postData(any(), loginparams.toJson())).thenAnswer((_) async => HttpResponse(statusCode: 500, data: ''));
+      //test
+      final call = remotedsImpl.getToken;
+      expect(()=>call(loginparams), throwsA(TypeMatcher<ServerException>()));
     });
   });
 }

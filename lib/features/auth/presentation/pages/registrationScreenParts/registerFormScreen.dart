@@ -4,7 +4,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:ostadi_frontend/constants/app_constants.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/registration_parts_cubits/register_form_cubit.dart';
 import 'package:ostadi_frontend/layouts/formMobileLayout.dart';
-import 'package:ostadi_frontend/sharedComponent/form/textFormInput.dart';
+import 'package:ostadi_frontend/core/widgets/form/textFormInput.dart';
 
 class RegisterFormScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();

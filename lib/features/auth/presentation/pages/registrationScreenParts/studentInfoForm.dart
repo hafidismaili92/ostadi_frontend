@@ -6,8 +6,8 @@ import 'package:ostadi_frontend/features/auth/presentation/cubit/load_levels_cub
 import 'package:ostadi_frontend/features/auth/presentation/cubit/registration_parts_cubits/student_info_fom_cubit.dart';
 import 'package:ostadi_frontend/features/auth/presentation/widgets/custom_error_with_retry.dart';
 import 'package:ostadi_frontend/layouts/formMobileLayout.dart';
-import 'package:ostadi_frontend/sharedComponent/form/dropdownFormInputs.dart';
-import 'package:ostadi_frontend/sharedComponent/form/textFormInput.dart';
+import 'package:ostadi_frontend/core/widgets/form/dropdownFormInputs.dart';
+import 'package:ostadi_frontend/core/widgets/form/textFormInput.dart';
 
 class StudentInfoForm extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();

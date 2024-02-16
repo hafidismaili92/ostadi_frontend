@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 abstract class ApiService {
   Future<HttpResponse> getData(Uri url);
-  Future<HttpResponse> postData(Uri url, Map<String, dynamic> body);
+  Future<HttpResponse> postData(Uri url, Map<String, dynamic> body,[Map<String, String>? headers]);
 }
 
 class HttpResponse {
@@ -24,10 +24,10 @@ class HttpApiService implements ApiService {
   }
 
   @override
-  Future<HttpResponse> postData(Uri url, Map<String, dynamic> body) async {
-    
+  Future<HttpResponse> postData(Uri url, Map<String, dynamic> body, [Map<String,String>? headers]) async {
+    final postHeaders = headers?? {'Content-type': 'application/json','accept':'application/json'};
     final res = await client.post(url,
-        body: jsonEncode(body), headers: {'Content-type': 'application/json','accept':'application/json'});
+        body: jsonEncode(body), headers: postHeaders);
     
     return HttpResponse(data: res.body, statusCode: res.statusCode);
   }

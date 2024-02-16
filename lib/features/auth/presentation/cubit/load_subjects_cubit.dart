@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
+
 import 'package:equatable/equatable.dart';
 import 'package:ostadi_frontend/core/errors/failure.dart';
 import 'package:ostadi_frontend/features/auth/domain/entities/subject_entity.dart';
