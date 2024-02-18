@@ -18,6 +18,11 @@ class UnauthenticatedFailure extends Failure
    @override
   List<Object?> get props => [];
 }
+class NoTokenRegistredFailure extends Failure
+{
+  @override
+  List<Object?> get props => [];
+}
 class UnknownFailure extends Failure{
   @override
   List<Object?> get props => [];

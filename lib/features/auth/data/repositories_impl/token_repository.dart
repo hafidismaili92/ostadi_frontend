@@ -1,11 +1,15 @@
+
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ostadi_frontend/core/errors/exception.dart';
 
-class SessionRepository {
-String _TOKEN_KEY = 'user-token';
+class TokenRepository {
+  String _TOKEN_KEY = 'user-token';
 final FlutterSecureStorage secureStorage;
 
-  SessionRepository({required this.secureStorage});
+  TokenRepository({required this.secureStorage});
+
+
 Future<String?> readToken() async
 {
   // Create storage
@@ -17,7 +21,8 @@ Future<String?> readToken() async
   throw ReadLocalException();
 }
 }
-Future<void> storeToken(token) async
+
+Future<void> storeToken(String token) async
 {
   try {
   

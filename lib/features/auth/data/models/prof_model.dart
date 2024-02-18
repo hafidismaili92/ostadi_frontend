@@ -1,6 +1,9 @@
 
 
+import 'package:ostadi_frontend/features/auth/data/models/authenticated_user_model.dart';
 import 'package:ostadi_frontend/features/auth/domain/entities/user_entity.dart';
+
+
 
 class ProfModel extends ProfEntity {
   ProfModel({required super.subjects,required super.email, required super.avatar, required super.name});

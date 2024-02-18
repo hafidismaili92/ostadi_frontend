@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ostadi_frontend/constants/app_constants.dart';
+import 'package:ostadi_frontend/features/auth/presentation/cubit/authentication_cubit.dart';
 import 'package:ostadi_frontend/routes/routeController.dart';
-
+import 'package:ostadi_frontend/core/routes/router.dart' as router;
 import 'package:ostadi_frontend/routes/routeNames.dart' as routeNames;
 import 'package:ostadi_frontend/themes/theme.dart';
 import 'package:ostadi_frontend/core/app_dependencies_injection.dart' as di;
@@ -14,15 +16,13 @@ void main() async {
   runApp(
     DevicePreview(
       enabled: true,
-      builder: (context) => MyApp(), // Wrap your app
+      builder: (context) => OstadiApp(), // Wrap your app
     ),
   );
- //runApp(const MyApp());
+  //runApp(const OstadiApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class OstadiApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -37,13 +37,16 @@ class MyApp extends StatelessWidget {
         theme: appTheme.light,
         darkTheme: appTheme.dark,
         themeMode: ThemeMode.system);
-  }*/
-  return MaterialApp(
-        title: 'Flutter Demo',
-        initialRoute: routeNames.splashScreen,
-        onGenerateRoute: RouteController,
-        theme: appTheme.light,
-        darkTheme: appTheme.dark,
-        themeMode: ThemeMode.system);
+  }
+ );*/
+    return BlocProvider(
+      create: (context) => di.sl<AuthenticationCubit>(),
+      child: MaterialApp.router(
+          routerConfig: router.router,
+          title: 'OSTADI APP',
+          theme: appTheme.light,
+          darkTheme: appTheme.dark,
+          themeMode: ThemeMode.system),
+    );
   }
 }

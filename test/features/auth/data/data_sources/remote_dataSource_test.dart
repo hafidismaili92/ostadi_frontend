@@ -5,6 +5,7 @@ import 'package:ostadi_frontend/core/constants/api.dart';
 import 'package:ostadi_frontend/core/errors/exception.dart';
 import 'package:ostadi_frontend/core/services/apiService/api_service.dart';
 import 'package:ostadi_frontend/features/auth/data/data_sources/remote_dataSource.dart';
+import 'package:ostadi_frontend/features/auth/data/models/authenticated_user_model.dart';
 import 'package:ostadi_frontend/features/auth/data/models/level_model.dart';
 import 'package:ostadi_frontend/features/auth/data/models/prof_model.dart';
 import 'package:ostadi_frontend/features/auth/data/models/student_model.dart';
@@ -214,6 +215,45 @@ void main() {
       //test
       final call = remotedsImpl.getToken;
       expect(()=>call(loginparams), throwsA(TypeMatcher<ServerException>()));
+    });
+  });
+
+  group('test authentication', () {
+    const String userDataString = """
+{
+  "name": "profAccount",
+  "email": "prof@example.com",
+  "avatar":"avatar.jpg",
+  "is_default_student": false,
+  "is_student": false,
+  "is_professor": true
+}
+""";
+final userModel = AuthenticatedUserModel.fromJson(jsonDecode(userDataString));
+    test('should return a UserModel(ProfModel) when apiService respond with 200 status and Prof Data', () async {
+      //assert
+      when(()=>apiService.getData(any(),{'Authorization':'testtoken'})).thenAnswer((invocation) async => HttpResponse(statusCode: 200, data: userDataString));
+      //act
+      final res = await remotedsImpl.getAuthenticatedUser('testtoken');
+      print(res);
+      expect(res, userModel);
+    });
+
+    test('should throw UnAuthenticatedException when apiService respond with status < 500 and > 399', () {
+      //assert
+      when(()=>apiService.getData(any(),{'Authorization':'Token testtoken'})).thenAnswer((invocation) async => HttpResponse(statusCode: 401, data:''));
+      //act
+      final call = remotedsImpl.getAuthenticatedUser;
+      //assert
+      expect(()=>call('testtoken'), throwsA(TypeMatcher<UnauthenticatedException>()));
+    });
+    test('should throw ServerException when apiService respond with status >= 500 or <= 399', () {
+      //assert
+      when(()=>apiService.getData(any(),{'Authorization':'Token testtoken'})).thenAnswer((invocation) async => HttpResponse(statusCode: 500, data:''));
+      //act
+      final call = remotedsImpl.getAuthenticatedUser;
+      //assert
+      expect(()=>call('testtoken'), throwsA(TypeMatcher<ServerException>()));
     });
   });
 }

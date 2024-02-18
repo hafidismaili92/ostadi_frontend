@@ -1,6 +1,7 @@
+import 'package:ostadi_frontend/features/auth/data/models/authenticated_user_model.dart';
 import 'package:ostadi_frontend/features/auth/domain/entities/user_entity.dart';
 
-class StudentModel extends StudentEntity{
+class StudentModel extends StudentEntity {
   StudentModel({required super.level,required super.email, required super.avatar, required super.name});
 
   factory StudentModel.fromJson(Map<String,dynamic> jsonFormat)

@@ -6,21 +6,21 @@ import 'package:ostadi_frontend/core/errors/failure.dart';
 import 'package:ostadi_frontend/core/platform/connectionInfo.dart';
 import 'package:ostadi_frontend/features/auth/data/data_sources/remote_dataSource.dart';
 import 'package:ostadi_frontend/features/auth/data/repositories_impl/login_repository_impl.dart';
-import 'package:ostadi_frontend/features/auth/data/repositories_impl/session_repository.dart';
+import 'package:ostadi_frontend/features/auth/data/repositories_impl/token_repository.dart';
 import 'package:ostadi_frontend/features/auth/utils/classes/login_params.dart';
 
 
 class MockRemoteDataSource extends Mock implements AuthRemoteDataSourceImplementation {}
-class MockSessionRepository extends Mock implements SessionRepository{}
+class MockTokenRepository extends Mock implements TokenRepository{}
 class MockConnectioninfo extends Mock implements Connectioninfo {}
 void main() {
   late LoginRepositoryImplementation tRepo;
   MockRemoteDataSource tremoteDS = MockRemoteDataSource();
-  MockSessionRepository mocksessionRepo = MockSessionRepository();
+  MockTokenRepository mocksessionRepo = MockTokenRepository();
   MockConnectioninfo connectioninfo = MockConnectioninfo();
   final params = Loginparams(email: 'testEmail@example.com', password: 'testpassword');
   setUp((){
-tRepo = LoginRepositoryImplementation(connectionInfo: connectioninfo ,remoteDataSource: tremoteDS,sessionRepository: mocksessionRepo);
+tRepo = LoginRepositoryImplementation(connectionInfo: connectioninfo ,remoteDataSource: tremoteDS,tokenRepository: mocksessionRepo);
   });
   test('should  store token using sessionRepository and return the token when datasource return token succefully',() async {
     //arrange

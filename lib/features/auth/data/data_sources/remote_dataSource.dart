@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dartz/dartz.dart';
 import 'package:dartz/dartz_unsafe.dart';
 import 'package:ostadi_frontend/core/constants/api.dart';
 import 'package:ostadi_frontend/core/errors/exception.dart';
@@ -8,6 +9,7 @@ import 'package:ostadi_frontend/features/auth/data/models/level_model.dart';
 import 'package:ostadi_frontend/features/auth/data/models/prof_model.dart';
 import 'package:ostadi_frontend/features/auth/data/models/student_model.dart';
 import 'package:ostadi_frontend/features/auth/data/models/subject_model.dart';
+import 'package:ostadi_frontend/features/auth/data/models/authenticated_user_model.dart';
 import 'package:ostadi_frontend/features/auth/utils/classes/login_params.dart';
 import 'package:ostadi_frontend/features/auth/utils/classes/professor_parameters.dart';
 import 'package:ostadi_frontend/features/auth/utils/classes/student_parameters.dart';
@@ -17,7 +19,9 @@ abstract class AuthRemoteDataSource {
   Future<StudentModel> registerStudent(StudentParams params);
   Future<List<SubjectModel>> loadSubjects();
   Future<String> getToken(Loginparams params);
-   Future<List<LevelModel>> loadLevels();
+  Future<List<LevelModel>> loadLevels();
+
+  Future<AuthenticatedUserModel> getAuthenticatedUser(String token);
 }
 
 
@@ -28,6 +32,7 @@ class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource{
   static const String subjectsEndPoint = 'profils/subjects/';
   static const String createUserEndPoint ='user/create/';
   static const String getTokenEndPoint = 'user/token-auth/';
+  static const String getAuthenticatedUserEndPoint = 'user/authenticate-user';
   AuthRemoteDataSourceImplementation({required this.apiservice});
   @override
   Future<ProfModel> registerProf(ProfessorParams params) async{
@@ -119,6 +124,26 @@ class AuthRemoteDataSourceImplementation implements AuthRemoteDataSource{
   
 
 
+  }
+  
+  @override
+  Future<AuthenticatedUserModel> getAuthenticatedUser(String token) async {
+    final res = await apiservice.getData(Uri.parse('$BASE_URL/$getAuthenticatedUserEndPoint'),{'Authorization':'Token $token'});
+    final data = res.data;
+    if(res.statusCode==200)
+    {
+      final userModel = AuthenticatedUserModel.fromJson(jsonDecode(data));
+      return userModel;
+    }
+    else if(399<res.statusCode && res.statusCode < 500)
+    {
+      throw UnauthenticatedException();
+    }
+    else
+    {
+      throw ServerException();
+    }
+    
   }
 
 }
