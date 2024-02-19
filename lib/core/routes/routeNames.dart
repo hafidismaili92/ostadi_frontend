@@ -9,6 +9,10 @@ const routes = {
     'name':'home',
     'path':'home'
   },
+  'checkAuthenticated':{
+    'name':'checkAuthenticated',
+    'path':'check-authenticated'
+  },
   'login':{
     'name':'login',
     'path':'login'

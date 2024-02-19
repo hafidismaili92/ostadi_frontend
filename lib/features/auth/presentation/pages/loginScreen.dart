@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:ostadi_frontend/constants/app_constants.dart';
+import 'package:ostadi_frontend/core/pages/authentication_checker_page.dart';
 import 'package:ostadi_frontend/core/widgets/form/textFormInput.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/login_cubit_dart_cubit.dart';
 import 'package:ostadi_frontend/features/auth/utils/classes/login_params.dart';
@@ -27,7 +28,7 @@ class LoginScreen extends StatelessWidget {
               color: Theme.of(context).colorScheme.primary,
             ));
                 case LoginSuccessState:
-                return Text('ok man');
+                return AuthenticationCheckerPage();
               case LoginErrorState:
                 final errorData = state as LoginErrorState;
                 return LoginForm(initialEmail:errorData.entredEmail,initialPassword:errorData.entredpassword,errorMsg:errorData.errorMessage);

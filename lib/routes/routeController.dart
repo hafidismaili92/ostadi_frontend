@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ostadi_frontend/core/screens/splash_screen.dart';
+import 'package:ostadi_frontend/core/pages/splash_screen.dart';
 //routeNames
 import 'package:ostadi_frontend/routes/routeNames.dart' as routeNames;
 import 'package:ostadi_frontend/screens/firstScreen/firstScreen.dart';

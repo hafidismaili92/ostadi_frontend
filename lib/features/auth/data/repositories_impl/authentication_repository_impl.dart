@@ -20,9 +20,11 @@ final TokenRepository tokenRepo;
   Future<Either<Failure, AuthenticatedUserEntity>> getAuthenticatedUser() async{
     try {
       final token = await tokenRepo.readToken();
+      
     if(token != null)
     {
       final res = await remoteDS.getAuthenticatedUser(token);
+      
       return Right(res);
     }
     return Left(NoTokenRegistredFailure());
@@ -35,6 +37,7 @@ final TokenRepository tokenRepo;
     }
     catch (e)
     {
+      
       return Left(UnknownFailure());
     }
     

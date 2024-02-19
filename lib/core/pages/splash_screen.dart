@@ -1,11 +1,12 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ostadi_frontend/constants/assets.dart';
 import 'package:ostadi_frontend/features/auth/presentation/pages/loginScreen.dart';
 import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScreen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:lottie/lottie.dart';
-
+import 'package:ostadi_frontend/core/routes/routeNames.dart' as routeNames;
 class AppSplashScreen extends StatefulWidget {
   @override
   State<AppSplashScreen> createState() => _AppSplashScreenState();
@@ -32,6 +33,20 @@ dispose() {
 }
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration(seconds: 3),(){
+      context.goNamed(routeNames.routes['checkAuthenticated']!['name']!);
+    });
+    return Column(
+              
+              children: [
+                Text("OSTADI",style: Theme.of(context).textTheme.titleLarge!.copyWith(fontFamily: Font.cherryBombOne,color: Theme.of(context).colorScheme.onPrimary),),
+                Expanded(
+                  child: Lottie.asset('assets/lotties/logo_ostadi_animated.json'),
+                ),
+                
+               CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary,)
+              ],
+            );
     return AnimatedSplashScreen(
             
             splashIconSize: animController != null ? animController!.value * 250 : 250,
