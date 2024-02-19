@@ -3,10 +3,8 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ostadi_frontend/constants/app_constants.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/authentication_cubit.dart';
-import 'package:ostadi_frontend/routes/routeController.dart';
 import 'package:ostadi_frontend/core/routes/router.dart' as router;
-import 'package:ostadi_frontend/routes/routeNames.dart' as routeNames;
-import 'package:ostadi_frontend/themes/theme.dart';
+import 'package:ostadi_frontend/core/themes/theme.dart';
 import 'package:ostadi_frontend/core/app_dependencies_injection.dart' as di;
 
 void main() async {
