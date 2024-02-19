@@ -18,6 +18,7 @@ class _AppSplashScreenState extends State<AppSplashScreen>  with SingleTickerPro
 
   @override
   void initState() {
+    
     animController =
         AnimationController(vsync: this, duration: Duration(seconds: 1));
     animController!.forward();
@@ -25,6 +26,7 @@ class _AppSplashScreenState extends State<AppSplashScreen>  with SingleTickerPro
       
       setState(() {});
     });
+    super.initState();
   }
   @override
 dispose() {
@@ -33,20 +35,7 @@ dispose() {
 }
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 3),(){
-      context.goNamed(routeNames.routes['checkAuthenticated']!['name']!);
-    });
-    return Column(
-              
-              children: [
-                Text("OSTADI",style: Theme.of(context).textTheme.titleLarge!.copyWith(fontFamily: Font.cherryBombOne,color: Theme.of(context).colorScheme.onPrimary),),
-                Expanded(
-                  child: Lottie.asset('assets/lotties/logo_ostadi_animated.json'),
-                ),
-                
-               CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary,)
-              ],
-            );
+   
     return AnimatedSplashScreen(
             
             splashIconSize: animController != null ? animController!.value * 250 : 250,
@@ -62,7 +51,8 @@ dispose() {
                CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary,)
               ],
             ),
-            //nextScreen: RegistrationScreen(),
+            //i disable navigation cause we will handle navigation logic in the authentication checker page
+            disableNavigation: true,
             nextScreen: LoginScreen(),
             splashTransition: SplashTransition.fadeTransition,
             //pageTransitionType: PageTransitionType.scale,

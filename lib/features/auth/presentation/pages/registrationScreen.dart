@@ -1,5 +1,7 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/load_levels_cubit.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/load_subjects_cubit.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/register_user_cubit.dart';
@@ -16,6 +18,7 @@ import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScr
 import 'package:ostadi_frontend/core/app_dependencies_injection.dart' as di;
 import 'package:ostadi_frontend/features/auth/utils/classes/professor_parameters.dart';
 import 'package:ostadi_frontend/features/auth/utils/classes/student_parameters.dart';
+import 'package:ostadi_frontend/core/routes/routeNames.dart' as routeNames;
 
 ///errors to display when next clicked and the current page is not valid
 const String SUBJECTS_PAGE_ON_ERROR_MESSAGE =
@@ -311,7 +314,21 @@ class PageViewScreen extends StatelessWidget {
               },
             );
           }),
-        )
+        ),
+       
+        Padding(
+            padding: const EdgeInsets.only(bottom: 50.0),
+            child: Text.rich(
+                TextSpan(text: "Already have an Account?", children: <TextSpan>[
+              TextSpan(
+                text: 'Sign In',
+                style: Theme.of(context)
+                    .textTheme
+                    .labelMedium!
+                    .copyWith(color: Theme.of(context).colorScheme.primary),
+                recognizer:  TapGestureRecognizer()..onTap = () => context.goNamed(routeNames.routes["login"]!["name"]!)
+              ),
+            ])))
       ],
     );
   }

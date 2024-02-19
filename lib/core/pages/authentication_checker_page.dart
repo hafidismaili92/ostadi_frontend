@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ostadi_frontend/core/pages/splash_screen.dart';
 import 'package:ostadi_frontend/core/routes/routeNames.dart';
 
 import 'package:ostadi_frontend/features/auth/presentation/cubit/authentication_cubit.dart';
@@ -37,7 +38,7 @@ class AuthenticationCheckerPage extends StatelessWidget {
       child: BlocBuilder<AuthenticationCubit, AuthenticationState>(
         builder: (context, state) {
 
-          return state.runtimeType == AuthenticationInitial ? Center(child:Text('splash screen')) : AuthLoadingScreen();
+          return state.runtimeType == AuthenticationInitial ? AppSplashScreen() : AuthLoadingScreen();
         },
       ),
     );

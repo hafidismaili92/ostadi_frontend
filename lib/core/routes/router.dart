@@ -6,12 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ostadi_frontend/core/pages/authentication_checker_page.dart';
-import 'package:ostadi_frontend/core/pages/splash_screen.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/authentication_cubit.dart';
 import 'package:ostadi_frontend/features/auth/presentation/pages/loginScreen.dart';
-import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScreen.dart';
 import 'package:ostadi_frontend/core/routes/routeNames.dart' as routeNames;
-import 'package:ostadi_frontend/routes/routeNames.dart';
+import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScreen.dart';
+
 
 /// The route configuration.
 final GoRouter router = GoRouter(
@@ -61,6 +60,13 @@ final GoRouter router = GoRouter(
           path: routeNames.routes['appPresentation']!['path']!,
           builder: (BuildContext context, GoRouterState state) {
             return  const Center(child: Text('this is diaporama to present application when first use '));
+          },
+        ),
+        GoRoute(
+          name: routeNames.routes['register']!['name'],
+          path: routeNames.routes['register']!['path']!,
+          builder: (BuildContext context, GoRouterState state) {
+            return RegistrationScreen();
           },
         ),
       ],
