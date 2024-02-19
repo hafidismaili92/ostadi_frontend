@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:ostadi_frontend/constants/app_constants.dart';
+import 'package:ostadi_frontend/core/constants/app_constants.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/load_levels_cubit.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/registration_parts_cubits/student_info_fom_cubit.dart';
 import 'package:ostadi_frontend/features/auth/presentation/widgets/custom_error_with_retry.dart';
-import 'package:ostadi_frontend/layouts/formMobileLayout.dart';
+import 'package:ostadi_frontend/core/layouts/formMobileLayout.dart';
 import 'package:ostadi_frontend/core/widgets/form/dropdownFormInputs.dart';
 import 'package:ostadi_frontend/core/widgets/form/textFormInput.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ostadi_frontend/constants/app_constants.dart';
+import 'package:ostadi_frontend/core/constants/app_constants.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/load_subjects_cubit.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/registration_parts_cubits/subjects_cubit.dart';
 import 'package:ostadi_frontend/features/auth/presentation/widgets/custom_error_with_retry.dart';

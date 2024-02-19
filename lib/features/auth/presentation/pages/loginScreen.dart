@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ostadi_frontend/constants/app_constants.dart';
+import 'package:ostadi_frontend/core/constants/app_constants.dart';
 import 'package:ostadi_frontend/core/widgets/form/textFormInput.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/login_cubit_dart_cubit.dart';
 import 'package:ostadi_frontend/features/auth/utils/classes/login_params.dart';
-import 'package:ostadi_frontend/layouts/formMobileLayout.dart';
+import 'package:ostadi_frontend/core/layouts/formMobileLayout.dart';
 import 'package:ostadi_frontend/core/app_dependencies_injection.dart' as di;
 import 'package:ostadi_frontend/core/routes/routeNames.dart' as routeNames;
 

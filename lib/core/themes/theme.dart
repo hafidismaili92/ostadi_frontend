@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ostadi_frontend/constants/assets.dart';
+import 'package:ostadi_frontend/core/constants/assets.dart';
 
 TextTheme textTheme = TextTheme(
   displayLarge:
