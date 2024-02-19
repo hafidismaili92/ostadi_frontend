@@ -218,7 +218,7 @@ class PageViewScreen extends StatelessWidget {
                             ? FilledButton(
                                 onPressed: () {
                                   //if we are in page 3 (ie we have a user of type prof, jump to page 1)
-
+    
                                   _pageController.page == 3
                                       ? _pageController.jumpToPage(1)
                                       : _pageController.previousPage(
@@ -242,8 +242,8 @@ class PageViewScreen extends StatelessWidget {
                               //first check which page we are
                               final currentScreen =
                                   screens[_pageController.page!.toInt()];
-                              //TODO: reactivate the below commented code to active validation when nextpage
-                              /*if (currentScreen is SubjectsScreen &&
+                              
+                              if (currentScreen is SubjectsScreen &&
                                   BlocProvider.of<SubjectsCubit>(context)
                                       .state
                                       .selectedSubjects
@@ -272,7 +272,7 @@ class PageViewScreen extends StatelessWidget {
                                       .switchValidationState(false, '');
                                   return;
                                 }
-                              }*/
+                              }
                               //get userType
                               final userType =
                                   BlocProvider.of<TypeUserCubit>(context)
@@ -282,7 +282,7 @@ class PageViewScreen extends StatelessWidget {
                               if (![2, 3]
                                   .contains(pageIndexState.currentPage)) {
                                 //check if user is student, then navigate to next page, else navigate to page 3
-
+    
                                 if (userType == UserTypes.student) {
                                   _pageController.nextPage(
                                     duration: Duration(milliseconds: 500),

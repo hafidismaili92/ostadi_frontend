@@ -1,7 +1,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ostadi_frontend/core/constants/assets.dart';
+import 'package:ostadi_frontend/constants/assets.dart';
 import 'package:ostadi_frontend/features/auth/presentation/pages/loginScreen.dart';
 import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScreen.dart';
 import 'package:page_transition/page_transition.dart';

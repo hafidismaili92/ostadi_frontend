@@ -33,7 +33,7 @@ class FormMobileLayout extends StatelessWidget {
                 ),
               )),
             ),
-            Expanded(child: child ?? Container()),
+            Expanded(child: SingleChildScrollView(child: child ?? Container())),
           ],
         ),
       ),
