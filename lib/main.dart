@@ -11,13 +11,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
   //TODO: reactive device preview to test on mobile desktop...
-  runApp(
+  /*runApp(
     DevicePreview(
       enabled: true,
       builder: (context) => OstadiApp(), // Wrap your app
     ),
-  );
-  //runApp(const OstadiApp());
+  );*/
+  runApp(OstadiApp());
 }
 
 class OstadiApp extends StatelessWidget {

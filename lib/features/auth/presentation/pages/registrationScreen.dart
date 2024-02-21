@@ -62,11 +62,14 @@ class RegistrationScreen extends StatelessWidget {
         ),
       ],
       child: Scaffold(
+        
           body: SafeArea(
         child: RegisterScreenContainer(),
       )),
     );
   }
+
+  
 }
 
 class RegisterScreenContainer extends StatelessWidget {
@@ -191,145 +194,153 @@ class PageViewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: PageView(
-            controller: _pageController,
-            onPageChanged: (int page) {
-              BlocProvider.of<PageChangeCubit>(context)
-                  .setCurrentPageIndex(page);
-            },
-            children: screens,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: BlocBuilder<PageChangeCubit, PageIndexState>(
-              builder: (context, pageIndexState) {
-            return BlocBuilder<PageViewCubit, pageViewValidState>(
-              builder: (context, vpValidState) {
-                return Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        pageIndexState.currentPage > 0
-                            ? FilledButton(
-                                onPressed: () {
-                                  //if we are in page 3 (ie we have a user of type prof, jump to page 1)
+    return SingleChildScrollView(
+      child: Column(
+        
+        children: [
+          ConstrainedBox(
+            constraints: const BoxConstraints(
+    maxHeight: 500.0,
     
-                                  _pageController.page == 3
-                                      ? _pageController.jumpToPage(1)
-                                      : _pageController.previousPage(
-                                          duration: Duration(milliseconds: 500),
-                                          curve: Curves.ease,
-                                        );
-                                },
-                                child: Text('Previous'))
-                            : Container(),
-                        FilledButton(
-                            style: !vpValidState.isValid
-                                ? ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Theme.of(context).colorScheme.error))
-                                : const ButtonStyle(),
-                            onPressed: () {
-                              //prevent pass to next page if current page invalid(invalid form for example)
-                              //first make it valid
-                              BlocProvider.of<PageViewCubit>(context)
-                                  .switchValidationState(true, '');
-                              //first check which page we are
-                              final currentScreen =
-                                  screens[_pageController.page!.toInt()];
-                              
-                              if (currentScreen is SubjectsScreen &&
-                                  BlocProvider.of<SubjectsCubit>(context)
-                                      .state
-                                      .selectedSubjects
-                                      .isEmpty) {
-                                BlocProvider.of<PageViewCubit>(context)
-                                    .switchValidationState(
-                                        false, SUBJECTS_PAGE_ON_ERROR_MESSAGE);
-                                return;
-                              }
-                              if (currentScreen is RegisterFormScreen) {
-                                bool isFormValid =
-                                    (currentScreen as RegisterFormScreen)
-                                        .validate();
-                                if (!isFormValid) {
-                                  BlocProvider.of<PageViewCubit>(context)
-                                      .switchValidationState(false, '');
-                                  return;
-                                }
-                              }
-                              if (currentScreen is StudentInfoForm) {
-                                bool isFormValid =
-                                    (currentScreen as StudentInfoForm)
-                                        .validate();
-                                if (!isFormValid) {
-                                  BlocProvider.of<PageViewCubit>(context)
-                                      .switchValidationState(false, '');
-                                  return;
-                                }
-                              }
-                              //get userType
-                              final userType =
-                                  BlocProvider.of<TypeUserCubit>(context)
-                                      .state
-                                      .userType;
-                              //if we are not in the last page (either when student or prof)
-                              if (![2, 3]
-                                  .contains(pageIndexState.currentPage)) {
-                                //check if user is student, then navigate to next page, else navigate to page 3
-    
-                                if (userType == UserTypes.student) {
-                                  _pageController.nextPage(
-                                    duration: Duration(milliseconds: 500),
-                                    curve: Curves.ease,
-                                  );
-                                } else {
-                                  _pageController.jumpToPage(3);
-                                }
-                              } else {
-                                registerUser(context,userType);
-                              }
-                            },
-                            child: Text(
-                                ![2, 3].contains(pageIndexState.currentPage)
-                                    ? 'Next'
-                                    : 'Register')),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20.0),
-                      child: Text(
-                        vpValidState.message,
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.error),
-                      ),
-                    )
-                  ],
-                );
+  ),
+            child: PageView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: _pageController,
+              onPageChanged: (int page) {
+                BlocProvider.of<PageChangeCubit>(context)
+                    .setCurrentPageIndex(page);
               },
-            );
-          }),
-        ),
-       
-        Padding(
-            padding: const EdgeInsets.only(bottom: 50.0),
-            child: Text.rich(
-                TextSpan(text: "Already have an Account?", children: <TextSpan>[
-              TextSpan(
-                text: 'Sign In',
-                style: Theme.of(context)
-                    .textTheme
-                    .labelMedium!
-                    .copyWith(color: Theme.of(context).colorScheme.primary),
-                recognizer:  TapGestureRecognizer()..onTap = () => context.goNamed(routeNames.routes["login"]!["name"]!)
-              ),
-            ])))
-      ],
+              children: screens,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: BlocBuilder<PageChangeCubit, PageIndexState>(
+                builder: (context, pageIndexState) {
+              return BlocBuilder<PageViewCubit, pageViewValidState>(
+                builder: (context, vpValidState) {
+                  return Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          pageIndexState.currentPage > 0
+                              ? FilledButton(
+                                  onPressed: () {
+                                    //if we are in page 3 (ie we have a user of type prof, jump to page 1)
+      
+                                    _pageController.page == 3
+                                        ? _pageController.jumpToPage(1)
+                                        : _pageController.previousPage(
+                                            duration: Duration(milliseconds: 500),
+                                            curve: Curves.ease,
+                                          );
+                                  },
+                                  child: Text('Previous'))
+                              : Container(),
+                          FilledButton(
+                              style: !vpValidState.isValid
+                                  ? ButtonStyle(
+                                      backgroundColor: MaterialStateProperty.all(
+                                          Theme.of(context).colorScheme.error))
+                                  : const ButtonStyle(),
+                              onPressed: () {
+                                //prevent pass to next page if current page invalid(invalid form for example)
+                                //first make it valid
+                                BlocProvider.of<PageViewCubit>(context)
+                                    .switchValidationState(true, '');
+                                //first check which page we are
+                                final currentScreen =
+                                    screens[_pageController.page!.toInt()];
+                                
+                                if (currentScreen is SubjectsScreen &&
+                                    BlocProvider.of<SubjectsCubit>(context)
+                                        .state
+                                        .selectedSubjects
+                                        .isEmpty) {
+                                  BlocProvider.of<PageViewCubit>(context)
+                                      .switchValidationState(
+                                          false, SUBJECTS_PAGE_ON_ERROR_MESSAGE);
+                                  return;
+                                }
+                                if (currentScreen is RegisterFormScreen) {
+                                  bool isFormValid =
+                                      (currentScreen as RegisterFormScreen)
+                                          .validate();
+                                  if (!isFormValid) {
+                                    BlocProvider.of<PageViewCubit>(context)
+                                        .switchValidationState(false, '');
+                                    return;
+                                  }
+                                }
+                                if (currentScreen is StudentInfoForm) {
+                                  bool isFormValid =
+                                      (currentScreen as StudentInfoForm)
+                                          .validate();
+                                  if (!isFormValid) {
+                                    BlocProvider.of<PageViewCubit>(context)
+                                        .switchValidationState(false, '');
+                                    return;
+                                  }
+                                }
+                                //get userType
+                                final userType =
+                                    BlocProvider.of<TypeUserCubit>(context)
+                                        .state
+                                        .userType;
+                                //if we are not in the last page (either when student or prof)
+                                if (![2, 3]
+                                    .contains(pageIndexState.currentPage)) {
+                                  //check if user is student, then navigate to next page, else navigate to page 3
+      
+                                  if (userType == UserTypes.student) {
+                                    _pageController.nextPage(
+                                      duration: Duration(milliseconds: 500),
+                                      curve: Curves.ease,
+                                    );
+                                  } else {
+                                    _pageController.jumpToPage(3);
+                                  }
+                                } else {
+                                  registerUser(context,userType);
+                                }
+                              },
+                              child: Text(
+                                  ![2, 3].contains(pageIndexState.currentPage)
+                                      ? 'Next'
+                                      : 'Register')),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20.0),
+                        child: Text(
+                          vpValidState.message,
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.error),
+                        ),
+                      )
+                    ],
+                  );
+                },
+              );
+            }),
+          ),
+         
+          Padding(
+              padding: const EdgeInsets.only(bottom: 50.0),
+              child: Text.rich(
+                  TextSpan(text: "Already have an Account?", children: <TextSpan>[
+                TextSpan(
+                  text: 'Sign In',
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelMedium!
+                      .copyWith(color: Theme.of(context).colorScheme.primary),
+                  recognizer:  TapGestureRecognizer()..onTap = () => context.goNamed(routeNames.routes["login"]!["name"]!)
+                ),
+              ])))
+        ],
+      ),
     );
   }
 

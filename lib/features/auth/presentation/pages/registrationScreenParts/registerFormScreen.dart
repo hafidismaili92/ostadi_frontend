@@ -27,61 +27,63 @@ class RegisterFormScreen extends StatelessWidget {
             title: "Create Account",
             child: Form(
               key: _formKey,
-              child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                UnderLinedTextFormInput(
-                  onChanged: (value) {
-                    BlocProvider.of<RegisterFormCubit>(context)
-                        .updateName(value);
-                  },
-                  label: "User Name",
-                  icon: Icons.person_2_outlined,
-                  controller: nameTextController,
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(),
-                    FormBuilderValidators.maxLength(250)
-                  ]),
-                ),
-                UnderLinedTextFormInput(
-                  
-                    label: "Your Email",
-                    icon: Icons.mail_outline,
-                    controller: emailTextController ,
+              child: SingleChildScrollView(
+                child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  UnderLinedTextFormInput(
                     onChanged: (value) {
-                     BlocProvider.of<RegisterFormCubit>(context).updateEmail(value);
+                      BlocProvider.of<RegisterFormCubit>(context)
+                          .updateName(value);
                     },
+                    label: "User Name",
+                    icon: Icons.person_2_outlined,
+                    controller: nameTextController,
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(),
-                      FormBuilderValidators.email(),
                       FormBuilderValidators.maxLength(250)
-                    ])),
-                SizedBox(height: kVerticalSpace["small"]! / 2),
-                UnderLinedTextFormInput(
-                  
-                    label: "Your Password",
-                    hideText: true,
-                    controller: passwordTextController,
-                    icon: Icons.lock_outline,
-                    onChanged: (value) {
-                     BlocProvider.of<RegisterFormCubit>(context).updatePassword(value);
-                    },
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
-                      FormBuilderValidators.minLength(8),
-                      FormBuilderValidators.maxLength(250)
-                    ])),
-                UnderLinedTextFormInput(
-                 
-                    label: "Confirm Password",
-                    hideText: true,
-                    controller: confirmpasswordTextController,
-                    icon: Icons.lock,
-                    onChanged: (value) {
-                     BlocProvider.of<RegisterFormCubit>(context).updateConfirmPassword(value);
-                    },
-                    validator: (value) {
-                      return value != state.password ? "password dont match" : null;
-                    }),
-              ]),
+                    ]),
+                  ),
+                  UnderLinedTextFormInput(
+                    
+                      label: "Your Email",
+                      icon: Icons.mail_outline,
+                      controller: emailTextController ,
+                      onChanged: (value) {
+                       BlocProvider.of<RegisterFormCubit>(context).updateEmail(value);
+                      },
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(),
+                        FormBuilderValidators.email(),
+                        FormBuilderValidators.maxLength(250)
+                      ])),
+                  SizedBox(height: kVerticalSpace["small"]! / 2),
+                  UnderLinedTextFormInput(
+                    
+                      label: "Your Password",
+                      hideText: true,
+                      controller: passwordTextController,
+                      icon: Icons.lock_outline,
+                      onChanged: (value) {
+                       BlocProvider.of<RegisterFormCubit>(context).updatePassword(value);
+                      },
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(),
+                        FormBuilderValidators.minLength(8),
+                        FormBuilderValidators.maxLength(250)
+                      ])),
+                  UnderLinedTextFormInput(
+                   
+                      label: "Confirm Password",
+                      hideText: true,
+                      controller: confirmpasswordTextController,
+                      icon: Icons.lock,
+                      onChanged: (value) {
+                       BlocProvider.of<RegisterFormCubit>(context).updateConfirmPassword(value);
+                      },
+                      validator: (value) {
+                        return value != state.password ? "password dont match" : null;
+                      }),
+                ]),
+              ),
             ));
       },
     );

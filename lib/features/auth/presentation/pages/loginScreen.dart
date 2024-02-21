@@ -17,40 +17,42 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: FormMobileLayout(
-      title: "Login to Your Account",
-      child: BlocProvider(
-        create: (context) => di.sl<LoginCubitDartCubit>(),
-        child: BlocListener<LoginCubitDartCubit, LoginCubitDartState>(
-          listener: (loginContext, loginState) {
-            if (loginState.runtimeType == LoginSuccessState) {
-              loginContext.goNamed(routeNames.routes['firstPage']!['name']!);
-            }
-          },
-          child: BlocBuilder<LoginCubitDartCubit, LoginCubitDartState>(
-            builder: (context, state) {
-              switch (state.runtimeType) {
-                case LoginLoadingState:
-                  return Center(
-                      child: CircularProgressIndicator(
-                    color: Theme.of(context).colorScheme.primary,
-                  ));
-
-                case LoginErrorState:
-                  final errorData = state as LoginErrorState;
-                  return LoginForm(
-                      initialEmail: errorData.entredEmail,
-                      initialPassword: errorData.entredpassword,
-                      errorMsg: errorData.errorMessage);
-                default:
-                  return LoginForm(
-                      initialEmail: '', initialPassword: '', errorMsg: '');
+        body: SafeArea(
+          child: FormMobileLayout(
+                title: "Login to Your Account",
+                child: BlocProvider(
+          create: (context) => di.sl<LoginCubitDartCubit>(),
+          child: BlocListener<LoginCubitDartCubit, LoginCubitDartState>(
+            listener: (loginContext, loginState) {
+              if (loginState.runtimeType == LoginSuccessState) {
+                loginContext.goNamed(routeNames.routes['firstPage']!['name']!);
               }
             },
+            child: BlocBuilder<LoginCubitDartCubit, LoginCubitDartState>(
+              builder: (context, state) {
+                switch (state.runtimeType) {
+                  case LoginLoadingState:
+                    return Center(
+                        child: CircularProgressIndicator(
+                      color: Theme.of(context).colorScheme.primary,
+                    ));
+          
+                  case LoginErrorState:
+                    final errorData = state as LoginErrorState;
+                    return LoginForm(
+                        initialEmail: errorData.entredEmail,
+                        initialPassword: errorData.entredpassword,
+                        errorMsg: errorData.errorMessage);
+                  default:
+                    return LoginForm(
+                        initialEmail: '', initialPassword: '', errorMsg: '');
+                }
+              },
+            ),
           ),
-        ),
-      ),
-    ));
+                ),
+              ),
+        ));
   }
 }
 
@@ -72,61 +74,65 @@ class LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Form(
       key: loginFormKey,
-      child: Column(children: [
-        UnderLinedTextFormInput(
-            label: "Your Email",
-            icon: Icons.mail_outline,
-            controller: emailController,
-            validator: FormBuilderValidators.compose([
-              FormBuilderValidators.required(),
-              FormBuilderValidators.email(),
-              FormBuilderValidators.maxLength(250)
-            ])),
-        SizedBox(height: kVerticalSpace["small"]!),
-        UnderLinedTextFormInput(
-            label: "Your Password",
-            hideText: true,
-            controller: passwordController,
-            icon: Icons.lock_outline,
-            validator: FormBuilderValidators.compose([
-              FormBuilderValidators.required(),
-              FormBuilderValidators.minLength(8),
-              FormBuilderValidators.maxLength(250)
-            ])),
-        SizedBox(height: kVerticalSpace["large"]!),
-        ElevatedButton(
-          onPressed: () => performLogin(context),
-          child: Text(
-            'Sign In',
-          ),
-          style: ElevatedButton.styleFrom(
-            backgroundColor:
-                Theme.of(context).colorScheme.primary, // background color
-            foregroundColor:
-                Theme.of(context).colorScheme.onPrimary, // text color
-            elevation: 5, // button's elevation when it's pressed
-          ),
-        ),
-        SizedBox(height: kVerticalSpace["meduim"]!),
-        Text(
-          errorMsg,
-          style: TextStyle(color: Theme.of(context).colorScheme.error),
-        ),
-        const Spacer(),
-        Padding(
-            padding: const EdgeInsets.only(bottom: 50.0),
-            child: Text.rich(
-                TextSpan(text: "Don't have an Account?", children: <TextSpan>[
-              TextSpan(
-                text: 'Register Now',
-                style: Theme.of(context)
-                    .textTheme
-                    .labelMedium!
-                    .copyWith(color: Theme.of(context).colorScheme.primary),
-                recognizer:  TapGestureRecognizer()..onTap = () => context.goNamed(routeNames.routes["register"]!["name"]!)
+      child: Center(
+        child: SingleChildScrollView(
+          child: Column(mainAxisAlignment: MainAxisAlignment.center,children: [
+            UnderLinedTextFormInput(
+                label: "Your Email",
+                icon: Icons.mail_outline,
+                controller: emailController,
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(),
+                  FormBuilderValidators.email(),
+                  FormBuilderValidators.maxLength(250)
+                ])),
+            SizedBox(height: kVerticalSpace["small"]!),
+            UnderLinedTextFormInput(
+                label: "Your Password",
+                hideText: true,
+                controller: passwordController,
+                icon: Icons.lock_outline,
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(),
+                  FormBuilderValidators.minLength(8),
+                  FormBuilderValidators.maxLength(250)
+                ])),
+            SizedBox(height: kVerticalSpace["large"]!),
+            ElevatedButton(
+              onPressed: () => performLogin(context),
+              child: Text(
+                'Sign In',
               ),
-            ])))
-      ]),
+              style: ElevatedButton.styleFrom(
+                backgroundColor:
+                    Theme.of(context).colorScheme.primary, // background color
+                foregroundColor:
+                    Theme.of(context).colorScheme.onPrimary, // text color
+                elevation: 5, // button's elevation when it's pressed
+              ),
+            ),
+            SizedBox(height: kVerticalSpace["meduim"]!),
+            Text(
+              errorMsg,
+              style: TextStyle(color: Theme.of(context).colorScheme.error),
+            ),
+            
+            Padding(
+                padding: const EdgeInsets.only(bottom: 50.0),
+                child: Text.rich(
+                    TextSpan(text: "Don't have an Account?", children: <TextSpan>[
+                  TextSpan(
+                    text: 'Register Now',
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelMedium!
+                        .copyWith(color: Theme.of(context).colorScheme.primary),
+                    recognizer:  TapGestureRecognizer()..onTap = () => context.goNamed(routeNames.routes["register"]!["name"]!)
+                  ),
+                ])))
+          ]),
+        ),
+      ),
     );
   }
 
