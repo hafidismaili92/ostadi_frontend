@@ -24,8 +24,11 @@ class AuthenticationCheckerPage extends StatelessWidget {
       
     return BlocListener<AuthenticationCubit, AuthenticationState>(
       listener: (context, authState) {
+        
         switch (authState.runtimeType) {
+          
           case AuthenticationError:
+          
             context.goNamed(routes['login']!['name']!);
           case AuthenticationSuccess:
             context.goNamed(routes['home']!['name']!);
@@ -37,7 +40,7 @@ class AuthenticationCheckerPage extends StatelessWidget {
       },
       child: BlocBuilder<AuthenticationCubit, AuthenticationState>(
         builder: (context, state) {
-
+          
           return state.runtimeType == AuthenticationInitial ? AppSplashScreen() : AuthLoadingScreen();
         },
       ),
@@ -48,6 +51,7 @@ class AuthenticationCheckerPage extends StatelessWidget {
 class AuthLoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     return const Center(
       child: CircularProgressIndicator(backgroundColor: Colors.red),
     );

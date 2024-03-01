@@ -11,13 +11,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
   //TODO: reactive device preview to test on mobile desktop...
-  /*runApp(
+  runApp(
     DevicePreview(
       enabled: true,
       builder: (context) => OstadiApp(), // Wrap your app
     ),
-  );*/
-  runApp(OstadiApp());
+  );
+  //runApp(OstadiApp());
 }
 
 class OstadiApp extends StatelessWidget {
@@ -25,21 +25,13 @@ class OstadiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppTheme appTheme = AppTheme(mainColor: kAppColorSeeds["green"]!);
-    //TODO: reactive device preview to test on mobile desktop...
-    /*return MaterialApp(
-        title: 'Flutter Demo',
-        locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
-        initialRoute: routeNames.splashScreen,
-        onGenerateRoute: RouteController,
-        theme: appTheme.light,
-        darkTheme: appTheme.dark,
-        themeMode: ThemeMode.system);
-  }
- );*/
+    
+    
     return BlocProvider(
       create: (context) => di.sl<AuthenticationCubit>(),
       child: MaterialApp.router(
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
           routerConfig: router.router,
           title: 'OSTADI APP',
           theme: appTheme.light,

@@ -12,7 +12,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
 
   void getAuthenticatedUser() async
   {
-    // emit(AuthenticationLoading());
+    emit(AuthenticationLoading());
     // Future.delayed(Duration(seconds: 3),(){
     //   emit(AuthenticationSuccess(user:AuthenticatedUserEntity(isDefaultStudent: false, isProfessor: true, isStudent: false, email: 'testemail@example.com', avatar: 'ff.jpg', name: 'ism test') ));
     // });

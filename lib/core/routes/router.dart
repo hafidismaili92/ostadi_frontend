@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ostadi_frontend/core/pages/authentication_checker_page.dart';
+import 'package:ostadi_frontend/core/pages/mobile_home.dart';
 import 'package:ostadi_frontend/features/auth/presentation/cubit/authentication_cubit.dart';
 import 'package:ostadi_frontend/features/auth/presentation/pages/loginScreen.dart';
 import 'package:ostadi_frontend/core/routes/routeNames.dart' as routeNames;
@@ -14,7 +15,7 @@ import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScr
 
 /// The route configuration.
 final GoRouter router = GoRouter(
-  initialLocation: '/'+routeNames.routes['login']!['path']!,
+  initialLocation: routeNames.routes['firstPage']!['path']!,
   routes: <RouteBase>[
     GoRoute(
       name: routeNames.routes['firstPage']!['name'],
@@ -43,7 +44,8 @@ final GoRouter router = GoRouter(
           path: routeNames.routes['home']!['path']!,
           builder: (BuildContext context, GoRouterState state) {
             final stateauth = BlocProvider.of<AuthenticationCubit>(context).state;
-            return  Center(child: Column(
+            return MobileHome();
+            /*return  Center(child: Column(
               children: [
                 Text('welcome'),
                 ElevatedButton(onPressed: () async {
@@ -52,7 +54,7 @@ final GoRouter router = GoRouter(
                   context.goNamed(routeNames.routes['firstPage']!['name']!);
                 }, child: Text('log out'))
               ],
-            ));
+            ));*/
           },
         ),
         GoRoute(

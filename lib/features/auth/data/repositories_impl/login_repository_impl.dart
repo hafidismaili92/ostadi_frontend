@@ -28,6 +28,7 @@ class LoginRepositoryImplementation implements LoginRepository {
       } on ServerException {
         return Left(ServerFailure());
       } on Exception catch (e) {
+       
         return Left(UnknownFailure());
       }
     } else {

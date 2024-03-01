@@ -118,7 +118,7 @@ class RegisterScreenContainer extends StatelessWidget {
                     height: 50,
                   ),
                   ElevatedButton(
-                      onPressed: () => print('login'),
+                      onPressed: () => context.goNamed(routeNames.routes['firstPage']!['name']!),
                       child: const Text('Login'))
                 ],
               ),
