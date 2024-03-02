@@ -29,11 +29,11 @@ class AuthenticationCheckerPage extends StatelessWidget {
           
           case AuthenticationError:
           
-            context.goNamed(routes['login']!['name']!);
+            context.pushReplacementNamed(routes['login']!['name']!);
           case AuthenticationSuccess:
-            context.goNamed(routes['home']!['name']!);
+            context.pushReplacementNamed(routes['home']!['name']!);
           case NoTokenRegistredState:
-            context.goNamed(routes['home']!['name']!);
+            context.pushReplacementNamed(routes['home']!['name']!);
           default:
             break;
         }

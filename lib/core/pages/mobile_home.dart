@@ -22,7 +22,7 @@ class _MobileHomeState extends State<MobileHome> with TickerProviderStateMixin {
     
     // use "MotionTabBarController" to replace with "TabController", if you need to programmatically change the tab
     _motionTabBarController = MotionTabBarController(
-      initialIndex: 1,
+      initialIndex: 0,
       length: 4,
       vsync: this,
     );
@@ -41,6 +41,31 @@ class _MobileHomeState extends State<MobileHome> with TickerProviderStateMixin {
  
  
     return Scaffold(
+      appBar: AppBar(
+        title: Text('My Posts'),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(5),
+              bottomLeft: Radius.circular(5)),
+        ),
+        elevation: 0.00,
+        backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+        leading: const Padding(
+          padding: EdgeInsets.symmetric(vertical:8.0),
+          child: CircleAvatar(
+                 
+                  backgroundImage:
+                      NetworkImage('https://picsum.photos/200'),
+                  backgroundColor: Colors.transparent,
+                ),
+        ),
+        actions: [TextButton(onPressed: (){}, child: Row(
+          children: [
+            Icon(Icons.add,color: Theme.of(context).colorScheme.primary,),
+            Text('New Post',style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Theme.of(context).colorScheme.primary,),),
+          ],
+        ))],
+      ),
       bottomNavigationBar: MotionTabBar(
     controller: _motionTabBarController, // ADD THIS if you need to change your tab programmatically
     initialSelectedTab: "Posts",

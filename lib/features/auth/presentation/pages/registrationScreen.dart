@@ -336,7 +336,7 @@ class PageViewScreen extends StatelessWidget {
                       .textTheme
                       .labelMedium!
                       .copyWith(color: Theme.of(context).colorScheme.primary),
-                  recognizer:  TapGestureRecognizer()..onTap = () => context.goNamed(routeNames.routes["login"]!["name"]!)
+                  recognizer:  TapGestureRecognizer()..onTap = () => context.pushReplacementNamed(routeNames.routes["login"]!["name"]!)
                 ),
               ])))
         ],

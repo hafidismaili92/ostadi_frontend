@@ -15,7 +15,9 @@ import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScr
 
 /// The route configuration.
 final GoRouter router = GoRouter(
+  
   initialLocation: routeNames.routes['firstPage']!['path']!,
+  //initialLocation: '/'+routeNames.routes['home']!['path']!,
   routes: <RouteBase>[
     GoRoute(
       name: routeNames.routes['firstPage']!['name'],

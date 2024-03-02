@@ -13,7 +13,7 @@ void main() async {
   //TODO: reactive device preview to test on mobile desktop...
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: false,
       builder: (context) => OstadiApp(), // Wrap your app
     ),
   );

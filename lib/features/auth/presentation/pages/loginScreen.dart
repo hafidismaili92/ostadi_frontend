@@ -25,7 +25,7 @@ class LoginScreen extends StatelessWidget {
           child: BlocListener<LoginCubitDartCubit, LoginCubitDartState>(
             listener: (loginContext, loginState) {
               if (loginState.runtimeType == LoginSuccessState) {
-                loginContext.goNamed(routeNames.routes['firstPage']!['name']!);
+                loginContext.pushReplacementNamed(routeNames.routes['firstPage']!['name']!);
               }
             },
             child: BlocBuilder<LoginCubitDartCubit, LoginCubitDartState>(
@@ -127,7 +127,7 @@ class LoginForm extends StatelessWidget {
                         .textTheme
                         .labelMedium!
                         .copyWith(color: Theme.of(context).colorScheme.primary),
-                    recognizer:  TapGestureRecognizer()..onTap = () => context.goNamed(routeNames.routes["register"]!["name"]!)
+                    recognizer:  TapGestureRecognizer()..onTap = () => context.pushReplacementNamed(routeNames.routes["register"]!["name"]!)
                   ),
                 ])))
           ]),
