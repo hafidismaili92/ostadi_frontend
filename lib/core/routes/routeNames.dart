@@ -28,5 +28,10 @@ const routes = {
   'appPresentation':{
     'name':'app-presentation',
     'path':'app-presentation'
+  },
+  'chatPage':
+  {
+    'name':'chat',
+    'path':'chat'
   }
 };

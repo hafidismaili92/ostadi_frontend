@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:motion_tab_bar/MotionBadgeWidget.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
+import 'package:ostadi_frontend/features/chat/presentation/pages/chat_page.dart';
 import 'package:ostadi_frontend/features/posts/presentation/pages/posts_list_page.dart';
 
 class MobileHome extends StatefulWidget {
@@ -22,7 +24,7 @@ class _MobileHomeState extends State<MobileHome> with TickerProviderStateMixin {
     
     // use "MotionTabBarController" to replace with "TabController", if you need to programmatically change the tab
     _motionTabBarController = MotionTabBarController(
-      initialIndex: 0,
+      initialIndex: 3,
       length: 4,
       vsync: this,
     );
@@ -68,7 +70,7 @@ class _MobileHomeState extends State<MobileHome> with TickerProviderStateMixin {
       ),
       bottomNavigationBar: MotionTabBar(
     controller: _motionTabBarController, // ADD THIS if you need to change your tab programmatically
-    initialSelectedTab: "Posts",
+    initialSelectedTab: "Messages",
     labels: const ["Posts", "Contracts", "Find", "Messages"],
     icons: const [Icons.notes_outlined, Icons.note_alt_outlined, Icons.search, Icons.chat],
 
@@ -108,8 +110,10 @@ class _MobileHomeState extends State<MobileHome> with TickerProviderStateMixin {
         const Center(
           child: Text("Profile"),
         ),
-        const Center(
-          child: Text("Settings"),
+        Center(
+          child: ElevatedButton(child: Text('click me to go to chat page'),onPressed: (){
+            GoRouter.of(context).pushNamed('chat');
+          },),
         ),
             ],
           ),

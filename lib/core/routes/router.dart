@@ -11,6 +11,7 @@ import 'package:ostadi_frontend/features/auth/presentation/cubit/authentication_
 import 'package:ostadi_frontend/features/auth/presentation/pages/loginScreen.dart';
 import 'package:ostadi_frontend/core/routes/routeNames.dart' as routeNames;
 import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScreen.dart';
+import 'package:ostadi_frontend/features/chat/presentation/pages/chat_page.dart';
 
 
 /// The route configuration.
@@ -46,17 +47,10 @@ final GoRouter router = GoRouter(
           path: routeNames.routes['home']!['path']!,
           builder: (BuildContext context, GoRouterState state) {
             final stateauth = BlocProvider.of<AuthenticationCubit>(context).state;
+            
             return MobileHome();
-            /*return  Center(child: Column(
-              children: [
-                Text('welcome'),
-                ElevatedButton(onPressed: () async {
-                  final storage = new FlutterSecureStorage();
-                  await storage.write(key: 'user-token',value: '');
-                  context.goNamed(routeNames.routes['firstPage']!['name']!);
-                }, child: Text('log out'))
-              ],
-            ));*/
+            //return ChatPage();
+            
           },
         ),
         GoRoute(
@@ -71,6 +65,15 @@ final GoRouter router = GoRouter(
           path: routeNames.routes['register']!['path']!,
           builder: (BuildContext context, GoRouterState state) {
             return RegistrationScreen();
+          },
+        ),
+        GoRoute(
+          name: routeNames.routes['chatPage']!['name'],
+          path: routeNames.routes['chatPage']!['path']!,
+          builder: (BuildContext context, GoRouterState state) {
+            
+            return ChatPage();
+            
           },
         ),
       ],
