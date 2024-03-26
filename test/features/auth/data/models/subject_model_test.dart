@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ostadi_frontend/features/auth/data/models/subject_model.dart';
-import 'package:ostadi_frontend/features/auth/domain/entities/subject_entity.dart';
+
 
 void main() {
   String jsonString = '{"id":"1","title": "test subject", "icon": "test icon"}';

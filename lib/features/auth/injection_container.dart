@@ -50,9 +50,7 @@ Future<void> init({required GetIt sl}) async
   sl.registerLazySingleton(() =>  RegisterStudentUseCase(repository: sl()));
   sl.registerLazySingleton<RegisterUserRepo>(() => RegisterUserRepoImpl(remoteDataSource: sl()));
 
-  //"token repos" dependencies
-
-  sl.registerLazySingleton<TokenRepository>(() => TokenRepository(secureStorage: sl()));
+  
 
   //"login feature" dependencies
 sl.registerFactory(() => LoginCubitDartCubit(loginUC: sl()));

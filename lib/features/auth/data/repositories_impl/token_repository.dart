@@ -18,7 +18,8 @@ Future<String?> readToken() async
 
   try {
   final token = await secureStorage.read(key: _TOKEN_KEY); 
-  
+  //TODO : return token not hardcoded one
+  return 'b2910daa07550a052f2e651670ef97fae0ca04fe';
   return token;
 } on Exception catch (e) {
   throw ReadLocalException();

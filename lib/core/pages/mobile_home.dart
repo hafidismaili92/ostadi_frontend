@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:motion_tab_bar/MotionBadgeWidget.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
-import 'package:ostadi_frontend/features/chat/presentation/pages/chat_page.dart';
-import 'package:ostadi_frontend/features/posts/presentation/pages/posts_list_page.dart';
+import 'package:ostadi_frontend/features/posts/presentation/cubit/load_my_posts_cubit.dart';
 
+import 'package:ostadi_frontend/features/posts/presentation/pages/posts_list_page.dart';
+import 'package:ostadi_frontend/core/app_dependencies_injection.dart' as di;
 class MobileHome extends StatefulWidget {
   const MobileHome({ Key? key }) : super(key: key);
 
@@ -96,6 +98,16 @@ class _MobileHomeState extends State<MobileHome> with TickerProviderStateMixin {
     },
   ),
       body: SafeArea(
+        child:  MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => di.sl<LoadMyPostsCubit>(),
+        ),
+        
+      ],
+      child: Scaffold(
+        
+          body: SafeArea(
         child: TabBarView(
             physics: const NeverScrollableScrollPhysics(), // swipe navigation handling is not supported
             // controller: _tabController,
@@ -117,6 +129,8 @@ class _MobileHomeState extends State<MobileHome> with TickerProviderStateMixin {
         ),
             ],
           ),
+      )),
+    ) 
       ),
     );
   }

@@ -81,7 +81,7 @@ class _ChatPageState extends State<ChatPage> {
         color: Theme.of(context).colorScheme.primary,
         child: Column(children: [
           Container(
-            height: 140,
+            height: 120,
             child: Center(
                 child: Row(
               children: [
