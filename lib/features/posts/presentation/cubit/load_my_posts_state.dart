@@ -1,17 +1,17 @@
 part of 'load_my_posts_cubit.dart';
 
-sealed class LoadMyPostsState extends Equatable {
-  const LoadMyPostsState();
+sealed class LoadPostsState extends Equatable {
+  const LoadPostsState();
 
   @override
   List<Object> get props => [];
 }
 
-final class LoadMyPostsInitial extends LoadMyPostsState {}
+final class LoadPostsInitial extends LoadPostsState {}
 
-final class LoadMyPostsLoading extends LoadMyPostsState{}
+final class LoadPostsLoading extends LoadPostsState{}
 
-final class LoadPostsSuccess extends LoadMyPostsState {
+final class LoadPostsSuccess extends LoadPostsState {
   final List<Post> posts;
 
   LoadPostsSuccess({required this.posts});
@@ -19,7 +19,7 @@ final class LoadPostsSuccess extends LoadMyPostsState {
   List<Object> get props => [posts];
 }
 
-final class LoadPostsError extends LoadMyPostsState {
+final class LoadPostsError extends LoadPostsState {
   final String errorMessage;
 
   LoadPostsError({required this.errorMessage});

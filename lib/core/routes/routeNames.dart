@@ -5,10 +5,15 @@ const routes = {
     'name':'fisrtPage',
     'path':'/'
   },
-  'home':{
-    'name':'home',
-    'path':'home'
+  'student-home':{
+    'name':'student-home',
+    'path':'student-home'
   },
+  'professor-home':{
+    'name':'professor-home',
+    'path':'professor-home'
+  }
+  ,
   'checkAuthenticated':{
     'name':'checkAuthenticated',
     'path':'check-authenticated'

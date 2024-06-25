@@ -1,9 +1,13 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ostadi_frontend/core/services/websocket/ws_service.dart';
+import 'package:ostadi_frontend/features/auth/data/repositories_impl/token_repository.dart';
+import 'package:ostadi_frontend/features/chat/presentation/cubit/chat_cubit.dart';
+import 'package:ostadi_frontend/core/app_dependencies_injection.dart' as di;
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 List<Map<String, dynamic>> messages = [
   {'isMe': false, 'text': 'first messages goes here.'},
@@ -40,6 +44,45 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  
+  /*void initChatRoomConnection(String token) async
+  {
+    WebSocketService wsService = WebSocketService();
+    WSRemoteDataSource wsRMDS = WSRemoteDataSource(wsService: wsService);
+    FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+    TokenRepository tokenRepo = TokenRepository(secureStorage: secureStorage);
+    ChatRepository repo = ChatRepositoryImpl(tokenRepository: tokenRepo,wsDataSource: wsRMDS,tok:token);
+    OpenChatroomUseCase useCase = OpenChatroomUseCase(chatRepository: repo);
+    
+    final result = await useCase.execute('test');
+    
+    result.fold((l) => isLoading=false, (r){isLoading=false;print('connection accepted');});
+  }*/
+  @override
+  Widget build(BuildContext context) {
+    WebSocketService wsService = WebSocketService();
+    const String roomID = "test";
+    return BlocProvider(
+      create: (_) => ChatCubit(chatWSService: wsService, roomId: roomID, tokenRepo: di.sl<TokenRepository>())..initWebSocketConnection("test"),
+      child: SafeArea(
+          child: Scaffold(
+        body: ChatPageBody(),
+      )),
+    );
+  }
+
+
+  
+}
+
+class ChatPageBody extends StatefulWidget {
+
+
+  @override
+  State<ChatPageBody> createState() => _ChatPageBodyState();
+}
+
+class _ChatPageBodyState extends State<ChatPageBody> {
   late ScrollController _scrollController;
   bool isLoading = true;
   @override
@@ -51,6 +94,7 @@ class _ChatPageState extends State<ChatPage> {
         isLoading = false;
       });
     });
+    //initChatRoomConnection();
   }
 
   @override
@@ -60,24 +104,20 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void addNewMessage(String message, bool isMe) {
-    setState(() {
-      messages.add({'isMe': isMe, 'text': message});
-    });
+    BlocProvider.of<ChatCubit>(context).sendMessage(message);
     //always scrool list to bottom after build (after new message)
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // do something
-      Timer(
+     /* Timer(
           Duration(milliseconds: 300),
           () => _scrollController
-              .jumpTo(_scrollController.position.maxScrollExtent));
+              .jumpTo(_scrollController.position.maxScrollExtent));*/
     });
   }
 
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      body: Container(
+  Widget build(BuildContext context){
+    return Container(
         color: Theme.of(context).colorScheme.primary,
         child: Column(children: [
           Container(
@@ -95,30 +135,41 @@ class _ChatPageState extends State<ChatPage> {
                     )),
                 Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(left:8.0),
-                      child: Row(
-                       
-                                        children: [
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Row(
+                    children: [
                       CircleAvatar(
                         backgroundImage:
                             NetworkImage('https://picsum.photos/200'),
                         backgroundColor: Colors.transparent,
                       ),
-                      SizedBox(width:15),
+                      SizedBox(width: 15),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             'hafid',
-                            style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary),
                           ),
                           Text('Ismaili',
-                              style: Theme.of(context).textTheme.labelMedium!.copyWith(color: Theme.of(context).colorScheme.onPrimary))
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary))
                         ],
                       )
-                                        ],
-                                      ),
-                    )),
+                    ],
+                  ),
+                )),
                 IconButton(
                     onPressed: () {},
                     icon: Icon(
@@ -163,36 +214,43 @@ class _ChatPageState extends State<ChatPage> {
                                 ShimmerLoadingItem(),
                           ),
                         )
-                      : ListView.separated(
-                          controller: _scrollController,
-                          separatorBuilder: (BuildContext context, int index) {
-                            return SizedBox(
-                              height: 20,
-                            );
+                      : BlocBuilder<ChatCubit, ChatState>(
+                          builder: (context, state) {
+                            if (state is ChatMessagesUpdate) {
+                              final chatState = state as ChatMessagesUpdate;
+                              return ListView.separated(
+                                  controller: _scrollController,
+                                  separatorBuilder:
+                                      (BuildContext context, int index) {
+                                    return SizedBox(
+                                      height: 20,
+                                    );
+                                  },
+                                  itemCount: chatState.messages.length,
+                                  itemBuilder: (BuildContext context,
+                                          int index) =>
+                                      MessageWidget(
+                                          message: chatState.messages[index] as String,
+                                          isMe: true,
+                                          avatarLink:
+                                              // messages[index]['isMe'] as bool
+                                              'https://picsum.photos/200'));
+                            }
+                            return Container();
                           },
-                          itemCount: messages.length,
-                          itemBuilder: (BuildContext context, int index) =>
-                              MessageWidget(
-                                message: messages[index]['text'] as String,
-                                isMe: messages[index]['isMe'] as bool,
-                                avatarLink: messages[index]['isMe'] as bool
-                                    ? ''
-                                    : 'https://picsum.photos/200',
-                              )),
+                        ),
                 )),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: NewMessageWidget(onPressNewMessage: addNewMessage),
-                )
+                ),
               ],
             ),
           )),
         ]),
-      ),
-    ));
+      );
   }
 }
-
 class NewMessageWidget extends StatelessWidget {
   TextEditingController messageController = TextEditingController(text: '');
   final Function onPressNewMessage;
@@ -231,7 +289,7 @@ class NewMessageWidget extends StatelessWidget {
               }
             },
           ),
-        )
+        ),
       ],
     );
   }

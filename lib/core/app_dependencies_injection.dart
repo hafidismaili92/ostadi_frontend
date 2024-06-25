@@ -13,6 +13,7 @@ Future<void> init() async {
   
   
   sl.registerSingleton(HttpApiService());
+  
   sl.registerLazySingleton(() => InternetConnectionChecker.createInstance());
   sl.registerSingleton<Connectioninfo>(ConnectioninfoImpl(connectionChecker: sl()));
   sl.registerSingleton<FlutterSecureStorage>(FlutterSecureStorage());

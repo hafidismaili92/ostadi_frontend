@@ -27,4 +27,18 @@ class AppInputDecorations {
         fillColor: fillColor,
         filled: true,
       );
+  static InputDecoration underLinedInput({Color? mainColor,Color? secondaryColor})=>InputDecoration(
+              
+              labelStyle: TextStyle(color: secondaryColor??Colors.grey),
+              floatingLabelStyle:
+                  TextStyle(color: mainColor??Colors.blueGrey),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: secondaryColor??Colors.grey, width: 1),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: mainColor??Colors.blueGrey, width: 2),
+              ),
+            );
 }

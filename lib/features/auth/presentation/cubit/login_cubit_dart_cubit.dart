@@ -17,7 +17,7 @@ class LoginCubitDartCubit extends Cubit<LoginCubitDartState> {
  
   emit(LoginLoadingState());
   final checkAuthenticated = await loginUC.tryLogin(params);
-  //TODO : reActivate login lgic (deactivated to create and test authenticated user screens like posts, messages,..... without need to login with correct credentials)
+  
  checkAuthenticated.fold((failure)=>emit(LoginErrorState(entredEmail: params.email,entredpassword: params.password,errorMessage: failureToErrorMsg(failure))),(isConnected)=>emit(LoginSuccessState()));
  //emit(LoginSuccessState());
 }

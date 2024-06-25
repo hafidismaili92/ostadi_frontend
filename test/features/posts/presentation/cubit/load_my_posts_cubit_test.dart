@@ -4,10 +4,11 @@ import 'package:mocktail/mocktail.dart';
 import 'package:ostadi_frontend/core/errors/failure.dart';
 import 'package:ostadi_frontend/features/posts/domain/entities/post.dart';
 import 'package:ostadi_frontend/features/posts/domain/use_cases/load_my_posts_uc.dart';
+import 'package:ostadi_frontend/features/posts/domain/use_cases/load_posts.dart';
 import 'package:ostadi_frontend/features/posts/presentation/cubit/load_my_posts_cubit.dart';
 
 class MockLoadMyPostsUseCase extends Mock implements LoadMyPosts {}
-
+class MockLoadPostsUseCase extends Mock implements LoadPosts{}
 void main() {
   List<Post> tposts = [
     Post(
@@ -21,6 +22,7 @@ void main() {
         amount: 300,
         subjects: ["math", "physics"],
         postedBy: 'hafid test',
+        durationId: '2',
         postedById: '1'),
     Post(
         id: '2',
@@ -33,19 +35,21 @@ void main() {
         amount: 300,
         subjects: ["math", "physics"],
         postedBy: 'hafid test',
+        durationId: '2',
         postedById: '2')
   ];
   MockLoadMyPostsUseCase loadMyPostsUC = MockLoadMyPostsUseCase();
+  MockLoadPostsUseCase loadAllPostsUC = MockLoadPostsUseCase();
   blocTest(
       'should emit [loadMyPostsloading, loadMyPostsSuccess] when usecase respond with list of posts',
       setUp: () {
         when(() => loadMyPostsUC.getMyPosts())
             .thenAnswer((_) async => Right(tposts));
       },
-      build: () => LoadMyPostsCubit(loadMyPostsUseCase: loadMyPostsUC),
+      build: () => LoadPostsCubit(loadMyPostsUseCase: loadMyPostsUC,loadAllPostsUseCase: loadAllPostsUC),
       act: (cubit) => cubit.LoadMyPostsEvent(),
-      expect: () => <LoadMyPostsState>[
-            LoadMyPostsLoading(),
+      expect: () => <LoadPostsState>[
+            LoadPostsLoading(),
             LoadPostsSuccess(posts: tposts)
           ]);
    blocTest(
@@ -54,10 +58,10 @@ void main() {
         when(() => loadMyPostsUC.getMyPosts())
             .thenAnswer((_) async =>Left(ServerFailure()));
       },
-      build: () => LoadMyPostsCubit(loadMyPostsUseCase: loadMyPostsUC),
+      build: () => LoadPostsCubit(loadMyPostsUseCase: loadMyPostsUC,loadAllPostsUseCase: loadAllPostsUC),
       act: (cubit) => cubit.LoadMyPostsEvent(),
-      expect: () => <LoadMyPostsState>[
-            LoadMyPostsLoading(),
-            LoadPostsError(errorMessage: LoadMyPostsCubit.failureToErrorMsg(ServerFailure()))
+      expect: () => <LoadPostsState>[
+            LoadPostsLoading(),
+            LoadPostsError(errorMessage: LoadPostsCubit.failureToErrorMsg(ServerFailure()))
           ]);
 }

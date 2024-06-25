@@ -2,12 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ostadi_frontend/core/pages/authentication_checker_page.dart';
-import 'package:ostadi_frontend/core/pages/mobile_home.dart';
-import 'package:ostadi_frontend/features/auth/presentation/cubit/authentication_cubit.dart';
+import 'package:ostadi_frontend/core/pages/mobile_profesor_home.dart';
+import 'package:ostadi_frontend/core/pages/mobile_student_home.dart';
 import 'package:ostadi_frontend/features/auth/presentation/pages/loginScreen.dart';
 import 'package:ostadi_frontend/core/routes/routeNames.dart' as routeNames;
 import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScreen.dart';
@@ -18,13 +16,15 @@ import 'package:ostadi_frontend/features/chat/presentation/pages/chat_page.dart'
 final GoRouter router = GoRouter(
   
   initialLocation: routeNames.routes['firstPage']!['path']!,
-  //initialLocation: '/'+routeNames.routes['home']!['path']!,
+ //initialLocation: '/'+routeNames.routes['home']!['path']!,
   routes: <RouteBase>[
     GoRoute(
       name: routeNames.routes['firstPage']!['name'],
       path: routeNames.routes['firstPage']!['path']!,
       builder: (BuildContext context, GoRouterState state) {
+       
         return AuthenticationCheckerPage();
+        //return ChatPage();
       },
       
       routes: <RouteBase>[
@@ -43,13 +43,24 @@ final GoRouter router = GoRouter(
           },
         ),
          GoRoute(
-          name: routeNames.routes['home']!['name'],
-          path: routeNames.routes['home']!['path']!,
+          name: routeNames.routes['student-home']!['name'],
+          path: routeNames.routes['student-home']!['path']!,
           builder: (BuildContext context, GoRouterState state) {
-            final stateauth = BlocProvider.of<AuthenticationCubit>(context).state;
+            //final stateauth = BlocProvider.of<AuthenticationCubit>(context).state;
             
-            return MobileHome();
+            return MobileStudentHome();
             //return ChatPage();
+            
+          },
+        ),
+        GoRoute(
+          name: routeNames.routes['professor-home']!['name'],
+          path: routeNames.routes['professor-home']!['path']!,
+          builder: (BuildContext context, GoRouterState state) {
+            
+            
+            return MobileProfessorHome();
+           
             
           },
         ),

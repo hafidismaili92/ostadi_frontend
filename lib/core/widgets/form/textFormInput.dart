@@ -6,9 +6,10 @@ class UnderLinedTextFormInput extends StatelessWidget {
   String? label;
   String? Function(String?)? validator;
   bool hideText;
+  TextInputType? type;
   void Function(String value)? onChanged;
   UnderLinedTextFormInput(
-      {this.icon, this.label = "", this.validator, this.onChanged, this.controller,this.hideText=false});
+      {this.icon, this.label = "", this.validator, this.onChanged, this.controller,this.hideText=false,this.type});
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -21,6 +22,8 @@ class UnderLinedTextFormInput extends StatelessWidget {
             controller: controller,
             validator: validator,
             onChanged: onChanged,
+            keyboardType:type?? TextInputType.text,
+            
             decoration: InputDecoration(
               labelText: label,
               labelStyle: TextStyle(color: Color.fromRGBO(216, 214, 214, 1)),

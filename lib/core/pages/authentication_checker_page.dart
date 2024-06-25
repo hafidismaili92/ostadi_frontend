@@ -31,9 +31,11 @@ class AuthenticationCheckerPage extends StatelessWidget {
           
             context.pushReplacementNamed(routes['login']!['name']!);
           case AuthenticationSuccess:
-            context.pushReplacementNamed(routes['home']!['name']!);
+          //TODO: check if student or professor , so that decide where to route
+            context.pushReplacementNamed(routes['student-home']!['name']!);
           case NoTokenRegistredState:
-            context.pushReplacementNamed(routes['home']!['name']!);
+          //TODO: handle this case
+            context.pushReplacementNamed(routes['student-home']!['name']!);
           default:
             break;
         }

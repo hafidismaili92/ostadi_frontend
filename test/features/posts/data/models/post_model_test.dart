@@ -32,11 +32,22 @@ void main() {
     "date": "2024-03-21T10:46:27.824977Z"
   }''';
   Map<String,dynamic> tjson = jsonDecode(jsonString);
-  PostModel excpectedPostModel = PostModel(id: "1",description: "this is a test for post description, this is a test for post description, this is a test for post description, this is a test for post description,", title: "test for post 1", date: "2024-03-21T10:46:27.824977Z", proposalCount: 0, hiredCount: 0, duration: "Less than 1 month", amount: 800, subjects: ["Physics","math"], postedBy: "studentAccount",postedById: "24");
-  test('test create model from map', () {
+  PostModel excpectedPostModel = PostModel(id: "1",description: "this is a test for post description, this is a test for post description, this is a test for post description, this is a test for post description,", title: "test for post 1", date: "2024-03-21T10:46:27.824977Z", proposalCount: 0, hiredCount: 0, duration: "Less than 1 month",durationId: '1',amount: 800, subjects: ["Physics","math"], postedBy: "studentAccount",postedById: "24");
+  test('test create model from map success', () {
     // Act
     final result = PostModel.fromJson(tjson);
+   
     //assert
     expect(result, excpectedPostModel);
+  });
+
+  test('test create model from map with duration null success', () {
+    // Act
+    tjson["duration"] = null;
+    
+    final result = PostModel.fromJson(tjson);
+    final postmodelwithNullDuration = PostModel(id: "1",description: "this is a test for post description, this is a test for post description, this is a test for post description, this is a test for post description,", title: "test for post 1", date: "2024-03-21T10:46:27.824977Z", proposalCount: 0, hiredCount: 0, duration: "not indicated",durationId: '-1',amount: 800, subjects: ["Physics","math"], postedBy: "studentAccount",postedById: "24");
+    //assert
+    expect(result, postmodelwithNullDuration );
   });
 }

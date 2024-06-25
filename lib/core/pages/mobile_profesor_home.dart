@@ -5,17 +5,19 @@ import 'package:motion_tab_bar/MotionBadgeWidget.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
 import 'package:ostadi_frontend/features/posts/presentation/cubit/load_my_posts_cubit.dart';
+import 'package:ostadi_frontend/features/posts/presentation/cubit/submit_proposal_cubit.dart';
+import 'package:ostadi_frontend/features/posts/presentation/pages/jobs_list_page.dart';
 
-import 'package:ostadi_frontend/features/posts/presentation/pages/posts_list_page.dart';
+import 'package:ostadi_frontend/features/posts/presentation/pages/my_posts_list_page.dart';
 import 'package:ostadi_frontend/core/app_dependencies_injection.dart' as di;
-class MobileHome extends StatefulWidget {
-  const MobileHome({ Key? key }) : super(key: key);
+class MobileProfessorHome extends StatefulWidget {
+  const MobileProfessorHome({ Key? key }) : super(key: key);
 
   @override
   _MobileHomeState createState() => _MobileHomeState();
 }
 
-class _MobileHomeState extends State<MobileHome> with TickerProviderStateMixin {
+class _MobileHomeState extends State<MobileProfessorHome> with TickerProviderStateMixin {
   // TabController _tabController;
   MotionTabBarController? _motionTabBarController;
 
@@ -26,8 +28,8 @@ class _MobileHomeState extends State<MobileHome> with TickerProviderStateMixin {
     
     // use "MotionTabBarController" to replace with "TabController", if you need to programmatically change the tab
     _motionTabBarController = MotionTabBarController(
-      initialIndex: 3,
-      length: 4,
+      initialIndex: 0,
+      length: 3,
       vsync: this,
     );
   }
@@ -46,7 +48,7 @@ class _MobileHomeState extends State<MobileHome> with TickerProviderStateMixin {
  
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Posts'),
+        title: Text('Find a Job'),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               bottomRight: Radius.circular(5),
@@ -63,18 +65,13 @@ class _MobileHomeState extends State<MobileHome> with TickerProviderStateMixin {
                   backgroundColor: Colors.transparent,
                 ),
         ),
-        actions: [TextButton(onPressed: (){}, child: Row(
-          children: [
-            Icon(Icons.add,color: Theme.of(context).colorScheme.primary,),
-            Text('New Post',style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Theme.of(context).colorScheme.primary,),),
-          ],
-        ))],
+        
       ),
       bottomNavigationBar: MotionTabBar(
     controller: _motionTabBarController, // ADD THIS if you need to change your tab programmatically
-    initialSelectedTab: "Messages",
-    labels: const ["Posts", "Contracts", "Find", "Messages"],
-    icons: const [Icons.notes_outlined, Icons.note_alt_outlined, Icons.search, Icons.chat],
+    initialSelectedTab: "Find Job",
+    labels: const ["Find Job", "My Contracts", "Messages"],
+    icons: const [Icons.search, Icons.note_alt_outlined, Icons.chat],
 
     // optional badges, length must be same with labels
     tabSize: 50,
@@ -84,10 +81,10 @@ class _MobileHomeState extends State<MobileHome> with TickerProviderStateMixin {
       color: Colors.black,
       fontWeight: FontWeight.w500,
     ),
-    tabIconColor: Theme.of(context).colorScheme.secondary,
+    tabIconColor: Theme.of(context).colorScheme.surfaceVariant,
     tabIconSize: 28.0,
     tabIconSelectedSize: 26.0,
-    tabSelectedColor: Theme.of(context).colorScheme.primary,
+    tabSelectedColor: Theme.of(context).colorScheme.secondary,
     tabIconSelectedColor: Colors.white,
     tabBarColor: Colors.white,
     onTabItemSelected: (int value) {
@@ -101,9 +98,9 @@ class _MobileHomeState extends State<MobileHome> with TickerProviderStateMixin {
         child:  MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => di.sl<LoadMyPostsCubit>(),
+          create: (context) => di.sl<LoadPostsCubit>(),
         ),
-        
+        BlocProvider(create: (context)=>di.sl<SubmitProposalCubit>()),
       ],
       child: Scaffold(
         
@@ -114,11 +111,9 @@ class _MobileHomeState extends State<MobileHome> with TickerProviderStateMixin {
             controller: _motionTabBarController,
             children: <Widget>[
         Center(
-          child: PostsPage(),
+          child: JobsListPage(),
         ),
-        const Center(
-          child: Text("Home"),
-        ),
+       
         const Center(
           child: Text("Profile"),
         ),

@@ -5,16 +5,16 @@ import 'package:ostadi_frontend/core/errors/failure.dart';
 import 'package:ostadi_frontend/features/posts/domain/entities/post.dart';
 import 'package:ostadi_frontend/features/posts/domain/repositories/posts_repository.dart';
 
-class LoadMyPosts
+class LoadPosts
   
 {
   final PostsRepository repository;
 
-  LoadMyPosts({required this.repository});
+  LoadPosts({required this.repository});
   
-  Future<Either<Failure,List<Post>>> getMyPosts() async {
+  Future<Either<Failure,List<Post>>> getPosts() async {
 
-      final result = await repository.loadMyPosts();
+      final result = await repository.loadPosts();
       return result;
   }
 }

@@ -13,21 +13,18 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   void getAuthenticatedUser() async
   {
     emit(AuthenticationLoading());
-    // Future.delayed(Duration(seconds: 3),(){
-    //   emit(AuthenticationSuccess(user:AuthenticatedUserEntity(isDefaultStudent: false, isProfessor: true, isStudent: false, email: 'testemail@example.com', avatar: 'ff.jpg', name: 'ism test') ));
-    // });
+   
 
-    //TODO : reActivate authentication logic (actually disabled to test authenticated user screens with no need to enter credentials)
-   /* final res = await getAuthenticatedUserUC.getAuthenticadedUser();
+    final res = await getAuthenticatedUserUC.getAuthenticadedUser();
     res.fold((failure) {if(failure is NoTokenRegistredFailure) {emit(NoTokenRegistredState());} else {
 
       emit(AuthenticationError(errorMsg: failureToErrorMsg(failure)));
 
     }}, (userEntity){
       emit(AuthenticationSuccess(user: userEntity));
-    });*/
+    });
 
-    emit(AuthenticationSuccess(user: AuthenticatedUserEntity(avatar: '',email: 'tetema@gjkjg.com',name: 'hafid',isDefaultStudent: true,isProfessor: false,isStudent: true)));
+   // emit(AuthenticationSuccess(user: AuthenticatedUserEntity(avatar: '',email: 'tetema@gjkjg.com',name: 'hafid',isDefaultStudent: true,isProfessor: false,isStudent: true)));
   }
 
   static failureToErrorMsg(Failure failure) {
