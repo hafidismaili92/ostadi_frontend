@@ -33,5 +33,9 @@ class NewPostCubit extends Cubit<NewPostState> {
       return 'unkwnow Error When loading Posts';
     }
   }
+
+  void resetState() {
+    emit(NewPostInitial());
+  }
   
 }

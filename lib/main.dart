@@ -6,6 +6,7 @@ import 'package:ostadi_frontend/features/auth/presentation/cubit/authentication_
 import 'package:ostadi_frontend/core/routes/router.dart' as router;
 import 'package:ostadi_frontend/core/themes/theme.dart';
 import 'package:ostadi_frontend/core/app_dependencies_injection.dart' as di;
+import 'package:ostadi_frontend/features/posts/presentation/cubit/load_duration_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,14 +25,16 @@ class OstadiApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    AppTheme appTheme = AppTheme(mainColor: kAppColorSeeds["green"]!);
-    
-    
-    return BlocProvider(
-      create: (context) => di.sl<AuthenticationCubit>(),
+    AppTheme appTheme = AppTheme(mainColor: kAppColorSeeds["clairBlue"]!);
+
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => di.sl<AuthenticationCubit>()),
+        
+      ],
       child: MaterialApp.router(
-        locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
+          locale: DevicePreview.locale(context),
+          builder: DevicePreview.appBuilder,
           routerConfig: router.router,
           title: 'OSTADI APP',
           theme: appTheme.light,

@@ -22,6 +22,14 @@ class LoadPostsCubit extends Cubit<LoadPostsState> {
     result.fold((failure) => emit(LoadPostsError(errorMessage: failureToErrorMsg(failure))), (posts) => emit(LoadPostsSuccess(posts: posts)));
   }
 
+  void updatePostsList(List<Post> newPosts)
+  {
+    emit(LoadPostsLoading());
+    Future.delayed(Duration(seconds: 1),(){
+      emit(LoadPostsSuccess(posts: newPosts));
+    });
+  }
+
   void LoadAllPostsEvent() async
   {
     emit(LoadPostsLoading());

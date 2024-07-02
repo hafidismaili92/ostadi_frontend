@@ -73,8 +73,9 @@ final ApiService apiservice;
 
   Future<PostModel> addNewPost(PostParams postParams,String token) async {
     
-    const addPostsEndPoint = 'jobs/my-jobPosts';
+    const addPostsEndPoint = 'jobs/my-jobPosts/';
     final result = await apiservice.postData(Uri.parse('$BASE_URL/$addPostsEndPoint'),postParams.toJson(),{'Authorization':'Token $token'});
+    
     if(result.statusCode==201)
     {
       final postJson = jsonDecode(result.data);
