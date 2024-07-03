@@ -11,9 +11,10 @@ import 'package:ostadi_frontend/features/posts/presentation/cubit/load_duration_
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
-  //TODO: reactive device preview to test on mobile desktop...
+  
   runApp(
     DevicePreview(
+      //TODO: set to true to active device preview to test on mobile desktop...
       enabled: false,
       builder: (context) => OstadiApp(), // Wrap your app
     ),
@@ -25,7 +26,7 @@ class OstadiApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    AppTheme appTheme = AppTheme(mainColor: kAppColorSeeds["clairBlue"]!);
+    AppTheme appTheme = AppTheme(mainColor: kAppColorSeeds["green"]!);
 
     return MultiBlocProvider(
       providers: [

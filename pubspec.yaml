@@ -47,6 +47,7 @@ dependencies:
   shimmer: ^3.0.0
   intl: ^0.18.1
   web_socket_channel: ^2.4.0
+  font_awesome_flutter: ^10.1.0
 
 dev_dependencies:
   flutter_test:
@@ -80,6 +81,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/lotties/
+    - assets/lotties/animated_splashscreen.json
 
  
 

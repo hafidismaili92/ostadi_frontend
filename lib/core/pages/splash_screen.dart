@@ -1,12 +1,6 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:ostadi_frontend/constants/assets.dart';
-import 'package:ostadi_frontend/features/auth/presentation/pages/loginScreen.dart';
-import 'package:ostadi_frontend/features/auth/presentation/pages/registrationScreen.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:lottie/lottie.dart';
-import 'package:ostadi_frontend/core/routes/routeNames.dart' as routeNames;
 class AppSplashScreen extends StatefulWidget {
   @override
   State<AppSplashScreen> createState() => _AppSplashScreenState();
@@ -36,26 +30,29 @@ dispose() {
   @override
   Widget build(BuildContext context) {
    
-    return AnimatedSplashScreen(
-            
-            splashIconSize: animController != null ? animController!.value * 250 : 250,
-            duration: 5000,
-            splash: Column(
-              
-              children: [
-                Text("OSTADI",style: Theme.of(context).textTheme.titleLarge!.copyWith(fontFamily: Font.cherryBombOne,color: Theme.of(context).colorScheme.onPrimary),),
-                Expanded(
-                  child: Lottie.asset('assets/lotties/logo_ostadi_animated.json'),
+    return Container(
+      color: Theme.of(context).colorScheme.primaryContainer,
+      child: Opacity(
+        opacity: animController!.value,
+        child: Transform(
+          transform: Matrix4.translationValues(
+                          0, animController!.value*20*-1, 0),
+          child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("OSTADI",style: Theme.of(context).textTheme.titleLarge!.copyWith(fontFamily: Font.cherryBombOne,color: Theme.of(context).colorScheme.onPrimaryContainer),),
+                      Lottie.asset(
+                  "assets/lotties/animated_splashscreen.json",
+                  
+                  width: 200,
+                  height: 200,
                 ),
-                
-               CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary,)
-              ],
-            ),
-            //i disable navigation cause we will handle navigation logic in the authentication checker page
-            disableNavigation: true,
-            nextScreen: LoginScreen(),
-            splashTransition: SplashTransition.fadeTransition,
-            //pageTransitionType: PageTransitionType.scale,
-            backgroundColor: Theme.of(context).colorScheme.primary);
+                Text('App Loading....',style: Theme.of(context).textTheme.labelMedium!.copyWith(color: Theme.of(context).colorScheme.onPrimaryContainer),),
+                    ],
+                  ),
+        ),
+      ),
+    );
+            
   }
 }

@@ -17,14 +17,14 @@ class AuthenticationCheckerPage extends StatelessWidget {
       final authenticationCubit = BlocProvider.of<AuthenticationCubit>(context);
 
       //3 seconds before checking auth status
-      Future.delayed(Duration(seconds: 3), () {
+      Future.delayed(Duration(seconds: 5), () {
         authenticationCubit.getAuthenticatedUser();
       });
 
       
     return BlocListener<AuthenticationCubit, AuthenticationState>(
       listener: (context, authState) {
-        
+       
         switch (authState.runtimeType) {
           
           case AuthenticationError:
@@ -35,7 +35,7 @@ class AuthenticationCheckerPage extends StatelessWidget {
             context.pushReplacementNamed(routes['student-home']!['name']!);
           case NoTokenRegistredState:
           //TODO: handle this case
-            context.pushReplacementNamed(routes['student-home']!['name']!);
+            context.pushReplacementNamed(routes['login']!['name']!);
           default:
             break;
         }
@@ -54,8 +54,11 @@ class AuthLoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return const Center(
-      child: CircularProgressIndicator(backgroundColor: Colors.red),
+    return Container(
+      color: Theme.of(context).colorScheme.primaryContainer,
+      child: Center(
+        child: CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimaryContainer),
+      ),
     );
   }
 }
