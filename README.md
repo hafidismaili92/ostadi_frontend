@@ -43,7 +43,8 @@ OSTADI is still in the early stages of development, and we are excited about the
 
 ## Screenshots
 ## Demo
-![Demo](docs/demo-readme.gif)
+![Demo](docs/demo-1.gif)
+![Demo](docs/demo-2.gif)
 ## Technologies 
 - Dart
 - Flutter

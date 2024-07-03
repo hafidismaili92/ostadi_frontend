@@ -15,7 +15,7 @@ void main() async {
   runApp(
     DevicePreview(
       //TODO: set to true to active device preview to test on mobile desktop...
-      enabled: false,
+      enabled: true,
       builder: (context) => OstadiApp(), // Wrap your app
     ),
   );
